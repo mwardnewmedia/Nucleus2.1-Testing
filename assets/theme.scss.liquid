@@ -866,8 +866,8 @@ $colorBtnFooter: {{ settings.color_footer_bg }};
 $colorBtnFooterHover: darken{{ settings.color_footer_btn_bg_hover, 5% }};
 
 // Text link colors
-$colorLink: {{ settings.color_body_links }};
-$colorLinkHover: lighten({{ settings.color_body_links }}, 15%);
+$colorLink: {% if settings.color_body_links == '#fff' or settings.color_body_links == 'white' or settings.color_body_links == '#ffffff' %}{{ settings.color_primary }}{% else %}{{ settings.color_body_links }}{% endif %};
+$colorLinkHover: lighten($colorLink, 15%);
 
 // General colors
 $colorBody: {{ settings.color_body_bg }};
