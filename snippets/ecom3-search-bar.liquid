@@ -55,7 +55,7 @@
           if(finalData.collections.length > 0) {
             predictiveCollections.innerHTML = `<h2>Collections</h2>` +
               finalData.collections.map(item => {
-              return  `<ul><li><a href=${item.url}>${item.title}</a></li></ul>`
+              return  `<ul><li><a class="exclude-color-link" href=${item.url}>${item.title}</a></li></ul>`
             }).join("")
           }
           else {
