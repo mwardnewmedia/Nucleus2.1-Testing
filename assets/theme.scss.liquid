@@ -866,8 +866,8 @@ $colorBtnFooter: {{ settings.color_footer_bg }};
 $colorBtnFooterHover: darken{{ settings.color_footer_btn_bg_hover, 5% }};
 
 // Text link colors
-$colorLink: $colorPrimary;
-$colorLinkHover: lighten($colorPrimary, 15%);
+$colorLink: {{ settings.color_body_links }};
+$colorLinkHover: lighten({{ settings.color_body_links }}, 15%);
 
 // General colors
 $colorBody: {{ settings.color_body_bg }};
@@ -6112,7 +6112,12 @@ $color-blankstate-background: rgba($colorTextBody, 0.1);
   font-weight: $headerFontWeight;
 }
 .blog-read-more {
-  color: $colorPrimary;
+  color: $colorLink;
+  
+  &:hover,
+  &:focus {
+    color: $colorLinkHover;
+  }
 }
 .blog-date {
   font-size:.87em;
@@ -10310,6 +10315,56 @@ section.bulletin-board--container {
 
 .bulletin-board--container .slick-arrow:before {
    color:#000!important; 
+}
+
+/* Apply $colorLink to bulletin board links (excluding .btn) */
+.bulletin-board--section a:not(.btn) {
+  color: $colorLink;
+  
+  &:hover,
+  &:focus {
+    color: $colorLinkHover;
+  }
+}
+
+/* Ensure button text remains white in bulletin board */
+.bulletin-board--section a.btn {
+  color: #fff;
+  
+  &:hover,
+  &:focus {
+    color: #fff;
+  }
+}
+
+/* Apply $colorLink to section-header--right links in collection-row-section */
+[data-section-type="collection-row-section"] .section-header--right a {
+  color: $colorLink;
+  
+  &:hover,
+  &:focus {
+    color: $colorLinkHover;
+  }
+}
+
+/* Apply $colorLink to blog-read-more links */
+.blog-read-more {
+  color: $colorLink;
+  
+  &:hover,
+  &:focus {
+    color: $colorLinkHover;
+  }
+}
+
+/* Apply $colorLink to read more links in blog template section */
+.shopify-section-blog-template a[href*="/blogs/"]:not(.btn) {
+  color: $colorLink;
+  
+  &:hover,
+  &:focus {
+    color: $colorLinkHover;
+  }
 }
 
 .fa-thumbtack:before {
