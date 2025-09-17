@@ -586,30 +586,50 @@ Modify at your own peril, a broken website is the likely result.
               {% endunless %}
 
               {% if section.settings.enable_clickable_boxes %}
-                <!-- Hide selector wrappers when using box selectors -->
-                <style>
-                  .selector-wrapper { display: none !important; }
-                </style>
-                <!-- Box Selector -->
-                <div class="variant-selector-boxes" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}">
-                  {% for variant in product.variants %}
-                    {% assign media_id = '' %}
-                    {% for media in product.media %}
-                      {% if media.id == variant.featured_media.id %}
-                        {% assign media_id = media.id %}
-                        {% break %}
-                      {% endif %}
+                {% assign has_only_default_title = false %}
+                {% if product.variants.size == 1 and product.variants.first.title == "Default Title" %}
+                  {% assign has_only_default_title = true %}
+                {% endif %}
+                
+                {% unless has_only_default_title %}
+                  <!-- Hide selector wrappers when using box selectors -->
+                  <style>
+                    .selector-wrapper { display: none !important; }
+                  </style>
+                  <!-- Box Selector -->
+                  <div class="variant-selector-boxes" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}">
+                    {% for variant in product.variants %}
+                      {% assign media_id = '' %}
+                      {% for media in product.media %}
+                        {% if media.id == variant.featured_media.id %}
+                          {% assign media_id = media.id %}
+                          {% break %}
+                        {% endif %}
+                      {% endfor %}
+                      <div class="variant-box {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}sold-out{% endunless %}" 
+                           data-variant-id="{{ variant.id }}" 
+                           data-sku="{{ variant.sku }}" 
+                           data-barcode="{{ variant.barcode }}"
+                           data-featured-media-id="{{ media_id }}"
+                           data-available="{{ variant.available }}">
+                        <span class="variant-box-text">{{ variant.title }}</span>
+                      </div>
                     {% endfor %}
-                    <div class="variant-box {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}sold-out{% endunless %}" 
-                         data-variant-id="{{ variant.id }}" 
-                         data-sku="{{ variant.sku }}" 
-                         data-barcode="{{ variant.barcode }}"
-                         data-featured-media-id="{{ media_id }}"
-                         data-available="{{ variant.available }}">
-                      <span class="variant-box-text">{{ variant.title }}</span>
-                    </div>
-                  {% endfor %}
-                  <!-- Hidden select for form submission -->
+                    <!-- Hidden select for form submission -->
+                    <select name="id" data-productid="{{ product.id }}" id="productSelect-{{ section.id }}" class="product-variant-selector product-variants-{{ section.id }}" style="display: none;">
+                      {% for variant in product.variants %}
+                        {% if variant.available %}
+                          <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }}</option>
+                        {% else %}
+                          <option disabled="disabled">
+                            {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                          </option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
+                {% else %}
+                  <!-- Hidden select for form submission when only Default Title variant exists -->
                   <select name="id" data-productid="{{ product.id }}" id="productSelect-{{ section.id }}" class="product-variant-selector product-variants-{{ section.id }}" style="display: none;">
                     {% for variant in product.variants %}
                       {% if variant.available %}
@@ -621,7 +641,7 @@ Modify at your own peril, a broken website is the likely result.
                       {% endif %}
                     {% endfor %}
                   </select>
-                </div>
+                {% endunless %}
               {% else %}
                 <!-- Dropdown Selector (Default) -->
                 <select name="id" data-productid="{{ product.id }}" id="productSelect-{{ section.id }}" class="product-variant-selector product-variants-{{ section.id }}" style="color:{{ settings.color_borders }};">
