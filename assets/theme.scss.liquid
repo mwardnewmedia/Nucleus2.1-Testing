@@ -10357,23 +10357,13 @@ section.bulletin-board--container {
   }
 }
 
-/* Apply $colorLink to read more links in blog template section */
-.shopify-section-blog-template a[href*="/blogs/"]:not(.btn) {
+/* Apply $colorLink to read more links in blog template section (excluding h2 links) */
+.shopify-section-blog-template h5 a[href*="/blogs/"]:not(.btn) {
   color: $colorLink;
   
   &:hover,
   &:focus {
     color: $colorLinkHover;
-  }
-}
-
-/* Override $colorLink for excluded links - use primary color instead */
-.shopify-section-blog-template a.exclude-color-link {
-  color: $colorPrimary !important;
-  
-  &:hover,
-  &:focus {
-    color: $colorPrimaryHover !important;
   }
 }
 
