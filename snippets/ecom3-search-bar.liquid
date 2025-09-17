@@ -83,7 +83,7 @@
                               ${(product.featured_image && product.featured_image.url) ? `<img src="${product.featured_image.url}" alt="${product.featured_image.alt}" />` : ''}
                             </div>
 							<div>
-	                        	<a href=${product.url}>${product.title.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())))}</a>
+	                        	<a class="exclude-color-link" href=${product.url}>${product.title.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())))}</a>
 							</div>
   						</li>
   					  </ul>`
