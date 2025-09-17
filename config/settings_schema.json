@@ -442,6 +442,20 @@
       },
       {
         "type": "text",
+        "id": "request_availability_form_link_label",
+        "label": {
+          "en": "Request Availability Form Link Label"
+        }
+      },
+      {
+        "type": "text",
+        "id": "request_availability_form_link_url",
+        "label": {
+          "en": "Request Availability Form Link URL"
+        }
+      },
+      {
+        "type": "text",
         "id": "rental_reservation_banner_text",
         "label": {
           "en": "Request Availability Banner & Button Text"

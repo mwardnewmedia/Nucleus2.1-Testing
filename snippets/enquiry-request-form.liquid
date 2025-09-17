@@ -172,6 +172,14 @@
         <textarea id="enquiry-comments" name="comments"></textarea>
       </div>
 
+      {% if settings.request_availability_form_link_label and settings.request_availability_form_link_url %}
+      <div style="margin-top: 15px;">
+        <a href="{{ settings.request_availability_form_link_url }}" target="_blank" class="request-availability-form-link" style="font-size: 1em; font-weight: 600; color: {{ settings.color_link }};">
+          {{ settings.request_availability_form_link_label }}
+        </a>
+      </div>
+      {% endif %}
+
       <!-- Checkbox Section -->
       <div class="enquiry-disclaimer-container">
         <label class="request-availability-form-label enquiry-disclaimer-form-label-required">
