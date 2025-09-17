@@ -10357,13 +10357,23 @@ section.bulletin-board--container {
   }
 }
 
-/* Apply $colorLink to read more links in blog template section (excluding h2 links) */
+/* Apply $colorLink to read more links in blog template section */
 .shopify-section-blog-template h5 a[href*="/blogs/"]:not(.btn) {
   color: $colorLink;
   
   &:hover,
   &:focus {
     color: $colorLinkHover;
+  }
+}
+
+/* Ensure blog title links use primary color */
+.shopify-section-blog-template .blog-title a {
+  color: $colorPrimary;
+  
+  &:hover,
+  &:focus {
+    color: $colorPrimaryHover;
   }
 }
 
