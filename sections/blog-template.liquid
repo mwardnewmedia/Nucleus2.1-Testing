@@ -26,7 +26,7 @@ Modify at your own peril, a broken website is the likely result.
 
         {% for article in blog.articles %}
 
-          <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+          <h2><a class="exclude-color-link" href="{{ article.url }}">{{ article.title }}</a></h2>
           {% if section.settings.blog_show_date or section.settings.blog_show_author %}
   				<div class="featured-blog__meta">
     				{% if section.settings.blog_show_date %}
