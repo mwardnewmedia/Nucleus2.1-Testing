@@ -182,12 +182,15 @@
 
       <!-- Checkbox Section -->
       <div class="enquiry-disclaimer-container">
-        <label class="request-availability-form-label enquiry-disclaimer-form-label-required">
-          <input type="checkbox" id="terms-checkbox" required style="margin-right: 5px;">
-          <span>
-            By checking this box, I acknowledge that I’m submitting a request to check availability of rental items only. This does not reserve or guarantee any items. A reservation will be confirmed separately after availability is verified by our team.
-          </span>
-        </label>
+        <div class="enquiry-disclaimer-wrapper">
+          <div class="enquiry-disclaimer-asterisk">*</div>
+          <label class="request-availability-form-label enquiry-disclaimer-form-label">
+            <input type="checkbox" id="terms-checkbox" required style="margin-right: 5px;">
+            <span>
+              By checking this box, I acknowledge that I'm submitting a request to check availability of rental items only. This does not reserve or guarantee any items. A reservation will be confirmed separately after availability is verified by our team.
+            </span>
+          </label>
+        </div>
       </div>
 
       <button id="js-enquiry-submit" type="submit" class="btn button enquiry-button">Send Request</button>
