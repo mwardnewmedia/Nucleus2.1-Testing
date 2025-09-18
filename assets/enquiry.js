@@ -140,7 +140,7 @@ EnquiryTemplates.product = function (data, index) {
         variant_title = data.product;
     typeof data.handle < "u" && (variant_title = `
             <a href="${product_link}?variant=${data.variant_id}"
-               class="enquiry-product-link enquiry-product-link-style"
+               class="enquiry-product-link enquiry-product-link-style exclude-color-link"
             >`, data.variant == "Default Title" ? variant_title += "n/a" : variant_title += data.variant, variant_title += "</a>");
     
     // Check global settings for hiding prices/rental rates
@@ -161,7 +161,7 @@ EnquiryTemplates.product = function (data, index) {
         <tr class="enquiry-row enquiry-row-${odd_or_even}" data-index="${index}">
             ${thumbnail}
             <td class="enquiry-product" colspan="${product_title_colspan}">
-                <a href="${product_link}" class="enquiry-product-link enquiry-product-link-style">
+                <a href="${product_link}" class="enquiry-product-link enquiry-product-link-style exclude-color-link">
                     ${data.product}
                 </a>
             </td>

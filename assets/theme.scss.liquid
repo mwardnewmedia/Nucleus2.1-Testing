@@ -10631,8 +10631,12 @@ div#rental-cart svg {
 }
 
 /** Eqnuiry CSS Additions **/
-.enquiry-product-link-style {
-  color: $colorTextBody;
+.enquiry-product-link-style.exclude-color-link {
+  color: $colorPrimary;
+
+  &:hover {
+    color: darken($colorPrimary, 5%);
+  }
 }
 .enquiry-flyout.enabled-shift {
     transform: translate(-500px)!important;
