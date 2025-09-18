@@ -5453,6 +5453,12 @@ $color-blankstate-background: rgba($colorTextBody, 0.1);
   }
 }
 
+/* Ensure the image container clips the scaled image to maintain border radius */
+.article__featured-link .lazyload__image-wrapper {
+  overflow: hidden;
+  border-radius: 4px 4px 0px 0px;
+}
+
 /*============================================================================
   #Map section
 ==============================================================================*/
