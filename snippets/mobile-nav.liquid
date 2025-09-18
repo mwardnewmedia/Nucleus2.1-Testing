@@ -321,26 +321,26 @@
           {% if section.settings.multi_locations %}
             <!-- Multiple locations enabled - show only Contact Us link -->
             {% if section.settings.multi_location_link != blank %}
-              <a href="{{ section.settings.multi_location_link | escape }}" class="mobile-nav--contact-icon-link" style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
+              <a href="{{ section.settings.multi_location_link | escape }}" aria-label="Our Locations" class="mobile-nav--contact-icon-link" style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
                 <i class="fa-solid fa-location-dot mobile-nav--contact-icon" aria-hidden="true" style="font-size: 20px; color: inherit;"></i>
               </a>
             {% endif %}
           {% else %}
             <!-- Single location - show individual contact methods -->
             {% if section.settings.show_phone and section.settings.header_phone != blank %}
-              <a href="tel:{{ section.settings.header_phone }}" class="mobile-nav--contact-icon-link" aria-label="Call us"  style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
+              <a href="tel:{{ section.settings.header_phone }}" caria-label="Our Phone Number" lass="mobile-nav--contact-icon-link" aria-label="Call us"  style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
                 <i class="fa-solid fa-phone mobile-nav--contact-icon" aria-hidden="true" style="font-size: 20px; color: inherit;"></i>
               </a>
             {% endif %}
             
             {% if section.settings.show_email and section.settings.header_email != blank %}
-              <a href="mailto:{{ section.settings.header_email }}" class="mobile-nav--contact-icon-link" aria-label="Email us"  style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
+              <a href="mailto:{{ section.settings.header_email }}" aria-label="Our Email Address" class="mobile-nav--contact-icon-link" aria-label="Email us"  style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
                 <i class="fa-solid fa-envelope mobile-nav--contact-icon" aria-hidden="true" style="font-size: 20px; color: inherit;"></i>
               </a>
             {% endif %}
             
             {% if section.settings.show_locations and section.settings.header_locations != blank %}
-              <a href="{{ section.settings.header_locations }}" class="mobile-nav--contact-icon-link" aria-label="View locations" style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
+              <a href="{{ section.settings.header_locations }}" class="mobile-nav--contact-icon-link" aria-label="Our Locations" style="display: inline-block; margin: 0 15px; text-decoration: none; padding: 0;">
                 <i class="fa-solid fa-location-dot mobile-nav--contact-icon" aria-hidden="true" style="font-size: 20px; color: inherit;"></i>
               </a>
             {% endif %}

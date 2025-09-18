@@ -10695,7 +10695,13 @@ div#rental-cart svg {
 
 .enquiry-disclaimer-wrapper {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.enquiry-disclaimer-asterisk-checkbox {
+  display: flex;
+  align-items: center;
   gap: 5px;
 }
 
@@ -10703,24 +10709,19 @@ div#rental-cart svg {
   color: #d11a18;
   font-weight: bold;
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
 .enquiry-disclaimer-form-label {
   flex: 1;
 }
 
-/* Mobile responsive styles */
-@media (max-width: 768px) {
-  .enquiry-disclaimer-wrapper {
-    flex-direction: column;
-    gap: 0;
-  }
-  
-  .enquiry-disclaimer-asterisk {
-    margin-bottom: 5px;
-    margin-top: 0;
-  }
+.enquiry-disclaimer-form-label input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+/* Override the width: 100% !important for disclaimer wrapper */
+.enquiry-disclaimer-wrapper .enquiry-disclaimer-form-label {
+  width: auto !important;
 }
 
 
