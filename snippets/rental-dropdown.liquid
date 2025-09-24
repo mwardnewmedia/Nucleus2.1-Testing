@@ -12,20 +12,7 @@ Modify at your own peril, a broken website is the likely result.
 {% comment %} Count rental collections first {% endcomment %}
 {% assign rental_collection_count = 0 %}
 {% for collection in collections %}
-  {% assign is_rental_collection = false %}
-  {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
-    {% assign is_rental_collection = true %}
-  {% else %}
-    {% comment %} Check if collection has rental products {% endcomment %}
-    {% for product in collection.products limit: 1 %}
-      {% if product.tags contains 'Rental' %}
-        {% assign is_rental_collection = true %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
-  {% endif %}
-  
-  {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
+  {% if collection.metafields.newmediaretailer.for_app == 'rental' and collection.title != 'Rentals' and collection.all_products_count > 0 %}
     {% assign rental_collection_count = rental_collection_count | plus: 1 %}
   {% endif %}
 {% endfor %}
@@ -55,27 +42,14 @@ Modify at your own peril, a broken website is the likely result.
     class="site-nav--dropdown{% if use_megamenu %} megamenu{% endif %}"
     data-meganav-dropdown>
     {% if use_megamenu %}
-    <a href="/collections/rentals" style="
+    <a href="{{ routes.collections_url }}/rentals" style="
         font-weight: initial;
         text-decoration: underline;
     ">View all rentals</a>
     <div class="megamenu-wrap">
     {% endif %}
       {% for collection in collections %}
-        {% assign is_rental_collection = false %}
-        {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
-          {% assign is_rental_collection = true %}
-        {% else %}
-          {% comment %} Check if collection has rental products {% endcomment %}
-          {% for product in collection.products limit: 1 %}
-            {% if product.tags contains 'Rental' %}
-              {% assign is_rental_collection = true %}
-              {% break %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-        
-        {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
+        {% if collection.metafields.newmediaretailer.for_app == 'rental' and collection.title != 'Rentals' and collection.all_products_count > 0 %}
           <li{% if collection.url == request.page_type %} class="site-nav--active"{% endif %}>
             <a
               href="{{ collection.url }}"
