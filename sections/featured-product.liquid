@@ -37,7 +37,7 @@ Modify at your own peril, a broken website is the likely result.
 <script>
   $(document).ready(function() {
     // Setup quantity selector functionality for featured product
-    $('#ProductSection-{{ section.id }} .js--qty-adjuster').on('click', function() {
+    $('#ProductSection-{{ section.id }} .pdp-quantity-selector .js--qty-adjuster').on('click', function() {
       var el = $(this);
       var qtySelector = el.siblings('.js--num');
       var qty = parseInt(qtySelector.val()) || 1;
@@ -58,7 +58,7 @@ Modify at your own peril, a broken website is the likely result.
     });
     
     // Ensure quantity is always at least 1 for featured product
-    $('#ProductSection-{{ section.id }} .js--num').on('blur', function() {
+    $('#ProductSection-{{ section.id }} .pdp-quantity-selector .js--num').on('blur', function() {
       var qty = parseInt($(this).val()) || 1;
       if (qty < 1) {
         $(this).val(1);
@@ -360,11 +360,15 @@ Modify at your own peril, a broken website is the likely result.
           {% endunless %}
 
           {% if section.settings.product_quantity_enable %}
-            <label for="quantity" class="quantity-selector quantity-selector-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
-            <div class="js-qty">
-              <input type="text" class="js--num" value="1" min="1" data-id="quantity" aria-label="quantity" pattern="[0-9]*" name="quantity" id="quantity">
-              <span class="js--qty-adjuster js--add" data-id="quantity" data-qty="1">+</span>
-              <span class="js--qty-adjuster js--minus" data-id="quantity" data-qty="-1">-</span>
+            <div class="pdp-quantity-selector">
+              <span class="quantity-selector-wrapper">
+                <label class="quantity-selector quantity-selector-{{ section.id }}" for="quantity">{{ 'products.product.quantity' | t }}</label>
+                <div class="js-qty">
+                  <input type="text" class="js--num" value="1" min="1" data-id="quantity" aria-label="quantity" pattern="[0-9]*" name="quantity" id="quantity">
+                  <span class="js--qty-adjuster js--add" data-id="quantity" data-qty="1">+</span>
+                  <span class="js--qty-adjuster js--minus" data-id="quantity" data-qty="-1">-</span>
+                </div>
+              </span>
             </div>
           {% endif %}
 
