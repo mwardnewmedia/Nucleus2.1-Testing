@@ -93,13 +93,6 @@
           {% assign is_rental_collection = false %}
           {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
             {% assign is_rental_collection = true %}
-          {% else %}
-            {% for product in collection.products limit: 1 %}
-              {% if product.tags contains 'Rental' %}
-                {% assign is_rental_collection = true %}
-                {% break %}
-              {% endif %}
-            {% endfor %}
           {% endif %}
           
           {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
@@ -136,13 +129,6 @@
               {% assign is_rental_collection = false %}
               {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
                 {% assign is_rental_collection = true %}
-              {% else %}
-                {% for product in collection.products limit: 1 %}
-                  {% if product.tags contains 'Rental' %}
-                    {% assign is_rental_collection = true %}
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
               {% endif %}
               
               {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
