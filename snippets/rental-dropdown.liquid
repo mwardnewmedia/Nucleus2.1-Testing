@@ -46,33 +46,80 @@ Modify at your own peril, a broken website is the likely result.
     id="MenuRental"
     class="site-nav--dropdown{% if use_megamenu %} megamenu{% endif %}"
     data-meganav-dropdown>
-    {% if use_megamenu %}
-    <a href="/collections/rentals" style="
-        font-weight: initial;
-        text-decoration: underline;
-    ">View all rentals</a>
-    <div class="megamenu-wrap">
-    {% endif %}
-      {% for collection in collections %}
-        {% assign is_rental_collection = false %}
-        {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
-          {% assign is_rental_collection = true %}
-        {% endif %}
-        
-        {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
-          <li{% if collection.url == request.page_type %} class="site-nav--active"{% endif %}>
+    {% if rental_collection_count > 0 %}
+      {% comment %} Show rental collections if they exist {% endcomment %}
+      {% if use_megamenu %}
+      <a href="{{ routes.collections_url }}/rentals" style="
+          font-weight: initial;
+          text-decoration: underline;
+      ">View all rentals</a>
+      <div class="megamenu-wrap">
+      {% endif %}
+        {% for collection in collections %}
+          {% assign is_rental_collection = false %}
+          {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
+            {% assign is_rental_collection = true %}
+          {% endif %}
+          
+          {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
+            <li{% if collection.url == request.page_type %} class="site-nav--active"{% endif %}>
+              <a
+                href="{{ collection.url }}"
+                class="site-nav--link"
+                data-meganav-type="child" 
+                tabindex="-1">
+                  {{ collection.title | escape }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% if use_megamenu %}
+      </div>
+      {% endif %}
+    {% else %}
+      {% comment %} Backup: Show standard navigation links when no rental collections exist {% endcomment %}
+      {% for childlink in link.links %}
+        {% if childlink.links != blank %}
+          <li
+            class="site-nav--has-dropdown site-nav--has-dropdown-grandchild {% if childlink.active %}site-nav--active{% endif %}"
+            aria-haspopup="true">
             <a
-              href="{{ collection.url }}"
+              href="{{ childlink.url }}"
               class="site-nav--link"
-              data-meganav-type="child" 
+              data-meganav-type="parent"
+              {% unless request.page_type == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless%}>
+                {{ childlink.title | escape }}
+            </a>
+            <ul
+              class="site-nav--dropdown-grandchild"
+              data-meganav-dropdown>
+              {% for grandchildlink in childlink.links %}
+                <li{% if grandchildlink.active %} class="site-nav--active"{% endif %}>
+                  <a
+                    href="{{ grandchildlink.url }}"
+                    class="site-nav--link"
+                    data-meganav-type="child"
+                    {% unless request.page_type == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}
+                    tabindex="-1">
+                      {{ grandchildlink.title | escape }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% else %}
+          <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+            <a
+              href="{{ childlink.url }}"
+              class="site-nav--link"
+              data-meganav-type="child"
+              {% if childlink.active %}aria-current="page"{% endif %}
               tabindex="-1">
-                {{ collection.title | escape }}
+                {{ childlink.title | escape }}
             </a>
           </li>
         {% endif %}
       {% endfor %}
-    {% if use_megamenu %}
-    </div>
     {% endif %}
   </ul>
 </li>

@@ -119,29 +119,76 @@
             class="mobile-nav--dropdown"
             data-meganav-dropdown>
             {% if rental_collection_count > 0 %}
+              {% comment %} Show rental collections if they exist {% endcomment %}
               <li>
                 <a href="{{ routes.collections_url }}/rentals" class="mobile-nav--link" data-meganav-type="child">
                   View all rentals
                 </a>
               </li>
+              {% for collection in collections %}
+                {% assign is_rental_collection = false %}
+                {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
+                  {% assign is_rental_collection = true %}
+                {% endif %}
+                
+                {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
+                  <li{% if collection.url == request.page_type %} class="mobile-nav--active"{% endif %}>
+                    <a
+                      href="{{ collection.url }}"
+                      class="mobile-nav--link"
+                      data-meganav-type="child">
+                        {{ collection.title | escape }}
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              {% comment %} Backup: Show standard navigation links when no rental collections exist {% endcomment %}
+              {% for childlink in link.links %}
+                {% if childlink.links != blank %}
+                  <li
+                    class="mobile-nav--has-dropdown mobile-nav--has-dropdown-grandchild {% if childlink.active %}mobile-nav--active{% endif %}"
+                    aria-haspopup="true">
+                    <a
+                      href="{{ childlink.url }}"
+                      class="mobile-nav--link"
+                      data-meganav-type="parent"
+                      {% unless request.page_type == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless%}>
+                        {{ childlink.title | escape }}
+                    </a>
+                    <button class="icon icon-arrow-down mobile-nav--button"
+                      aria-expanded="false"
+                      aria-label="{{ childlink.title | escape }} {{ 'layout.navigation.mobile_menu' | t }}">
+                    </button>
+                    <ul
+                      class="mobile-nav--dropdown-grandchild"
+                      data-meganav-dropdown>
+                      {% for grandchildlink in childlink.links %}
+                        <li{% if grandchildlink.active %} class="mobile-nav--active"{% endif %}>
+                          <a
+                            href="{{ grandchildlink.url }}"
+                            class="mobile-nav--link"
+                            data-meganav-type="child"
+                            {% unless request.page_type == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}>
+                              {{ grandchildlink.title | escape }}
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% else %}
+                  <li{% if childlink.active %} class="mobile-nav--active"{% endif %}>
+                    <a
+                      href="{{ childlink.url }}"
+                      class="mobile-nav--link"
+                      data-meganav-type="child"
+                      {% if childlink.active %}aria-current="page"{% endif %}>
+                        {{ childlink.title | escape }}
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
             {% endif %}
-            {% for collection in collections %}
-              {% assign is_rental_collection = false %}
-              {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
-                {% assign is_rental_collection = true %}
-              {% endif %}
-              
-              {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
-                <li{% if collection.url == request.page_type %} class="mobile-nav--active"{% endif %}>
-                  <a
-                    href="{{ collection.url }}"
-                    class="mobile-nav--link"
-                    data-meganav-type="child">
-                      {{ collection.title | escape }}
-                  </a>
-                </li>
-              {% endif %}
-            {% endfor %}
           </ul>
         </li>
       {% elsif link.title == section.settings.secondary_megamenu %}
