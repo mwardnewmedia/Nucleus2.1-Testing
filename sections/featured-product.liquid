@@ -130,6 +130,52 @@ Modify at your own peril, a broken website is the likely result.
   .js-qty {
     margin-bottom: 20px;
   }
+  
+  /* Featured Product Specific Clickable Box Styles */
+  .variant-selector-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .variant-box {
+    border: 2px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+    min-width: 80px;
+    text-align: center;
+  }
+  
+  .variant-box:hover {
+    border-color: #999;
+    background-color: #f9f9f9;
+  }
+  
+  .variant-box.selected {
+    border-color: #007acc;
+    background-color: #e6f3ff;
+    color: #007acc;
+  }
+  
+  .variant-box.sold-out {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+  }
+  
+  .variant-box.sold-out:hover {
+    border-color: #e0e0e0;
+    background-color: #f5f5f5;
+  }
+  
+  .variant-box-text {
+    font-size: 14px;
+    font-weight: 500;
+  }
 </style>
 
 <script>
@@ -160,6 +206,36 @@ Modify at your own peril, a broken website is the likely result.
       var qty = parseInt($(this).val()) || 1;
       if (qty < 1) {
         $(this).val(1);
+      }
+    });
+    
+    // Featured Product Clickable Box Selector Functionality
+    $('.variant-selector-boxes .variant-box').on('click', function() {
+      var $box = $(this);
+      var variantId = $box.data('variant-id');
+      var $select = $box.closest('.variant-selector-boxes').find('select');
+      
+      // Don't allow selection of sold out variants
+      if ($box.hasClass('sold-out')) {
+        return;
+      }
+      
+      // Update selected state
+      $box.siblings('.variant-box').removeClass('selected');
+      $box.addClass('selected');
+      
+      // Update hidden select
+      $select.val(variantId).trigger('change');
+      
+      // Update SKU and UPC display if they exist
+      var sku = $box.data('sku');
+      var barcode = $box.data('barcode');
+      
+      if (sku) {
+        $('.variant-sku').text(sku);
+      }
+      if (barcode) {
+        $('.variant-barcode').text(barcode);
       }
     });
   });
@@ -227,6 +303,66 @@ Modify at your own peril, a broken website is the likely result.
       <p class="product-meta" itemprop="brand">{{ vendor }}</p>
     {% endif %}
 
+    <div class="item-codes">
+      {%- assign current_variant = product.selected_or_first_available_variant -%}
+      {%- comment -%} SKU Logic {%- endcomment -%}
+      {% if current_variant.sku != blank %}
+        {% if settings.display_logged_in_customer_skus %}
+          {% if customer %}
+            <span>SKU: </span><span class="variant-sku">{{ current_variant.sku }}</span>
+          {% endif %}
+        {% else %}
+          {% if section.settings.product_sku_enable %}
+            <span>SKU: </span><span class="variant-sku">{{ current_variant.sku }}</span>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+      {%- comment -%} UPC Logic {%- endcomment -%}
+      {% if settings.display_logged_in_customer_upcs %}
+        {% if customer %}
+          {% if current_variant.barcode != blank %}
+            <span>UPC: </span><span class="variant-barcode">{{ current_variant.barcode }}</span>
+          {% endif %}
+        {% endif %}
+      {% else %}
+        {% if section.settings.product_upc_enable %}
+          {% if current_variant.barcode != blank %}
+            <span>UPC: </span><span class="variant-barcode">{{ current_variant.barcode }}</span>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <!-- Move Available variant quantity messaging to the top -->
+    {% assign curr_variant = product.selected_or_first_available_variant %}
+    {% assign qty = curr_variant.inventory_quantity %}
+
+    <div id="variantQuantity-{{ section.id }}" class="variant-quantity">
+      {% if section.settings.product_quantity_message and section.settings.house_hasson_catalog == false %}
+        {% include 'svg-definitions' with 'stock-icon' %}
+        <span id="variantQuantity-{{ section.id }}__message">
+        Available Inventory: {{ qty }}
+        </span>
+      {% endif %}
+      
+      {% if section.settings.product_quantity_message and section.settings.house_hasson_catalog %}
+        {% include 'svg-definitions' with 'stock-icon' %} 
+        <span id="variantQuantity-{{ section.id }}__message">
+        Available Inventory: 
+          {% if qty == 0 %}
+            Out of Stock
+          {% elsif qty >= 10 and qty < 20 %}
+            Low Stock
+          {% elsif qty >= 20 %}
+            In Stock
+          {% else %}
+            {{ qty }}
+          {% endif %}
+        </span>
+      {% endif %}
+    </div>
+    <!-- end -->
+
     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
       {% assign variant = product.selected_or_first_available_variant %}
@@ -242,7 +378,7 @@ Modify at your own peril, a broken website is the likely result.
           </span>
           {% include 'product-unit-price' variant: variant %}
         </li>
-        {% if compare_at_price > price %}
+        {% if compare_at_price > price and section.settings.product_savings %}
         <li>
           <span id="comparePrice-{{ section.id }}" class="sale-tag large">
             {% assign compare_price = compare_at_price %}
@@ -286,19 +422,79 @@ Modify at your own peril, a broken website is the likely result.
       {%- capture "form_id" -%}addToCartForm-{{ section.id }}{%- endcapture -%}
 
       {% form 'product', product, data-productid: product.id, class:form_class, id:form_id, data-product-form: '' %}
-          <select name="id" data-productid="{{ product.id }}" id="productSelect-{{ section.id }}" class="product-variants product-variants-{{ section.id }}">
-            {% for variant in product.variants %}
-              {% if variant.available %}
-
-                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ price | money_with_currency }}</option>
-
-              {% else %}
-                <option disabled="disabled">
-                  {{ variant.title }} - {{ 'products.product.sold_out' | t }}
-                </option>
-              {% endif %}
-            {% endfor %}
-          </select>
+          {% unless section.settings.hide_variant_selector %}
+          {% if section.settings.enable_clickable_boxes %}
+            {% assign has_only_default_title = false %}
+            {% if product.variants.size == 1 and product.variants.first.title == "Default Title" %}
+              {% assign has_only_default_title = true %}
+            {% endif %}
+            
+            {% unless has_only_default_title %}
+              <!-- Hide selector wrappers when using box selectors -->
+              <style>
+                .selector-wrapper { display: none !important; }
+              </style>
+              <!-- Box Selector -->
+              <div class="variant-selector-boxes" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}">
+                {% for variant in product.variants %}
+                  {% assign media_id = '' %}
+                  {% for media in product.media %}
+                    {% if media.id == variant.featured_media.id %}
+                      {% assign media_id = media.id %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                  <div class="variant-box {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}sold-out{% endunless %}" 
+                       data-variant-id="{{ variant.id }}" 
+                       data-sku="{{ variant.sku }}" 
+                       data-barcode="{{ variant.barcode }}"
+                       data-featured-media-id="{{ media_id }}"
+                       data-available="{{ variant.available }}">
+                    <span class="variant-box-text">{{ variant.title }}</span>
+                  </div>
+                {% endfor %}
+                <!-- Hidden select for form submission -->
+                <select name="id" data-productid="{{ product.id }}" id="productSelect-{{ section.id }}" class="product-variant-selector product-variants-{{ section.id }}" style="display: none;">
+                  {% for variant in product.variants %}
+                    {% if variant.available %}
+                      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }}</option>
+                    {% else %}
+                      <option disabled="disabled">
+                        {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                      </option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            {% else %}
+              <!-- Hidden select for form submission when only Default Title variant exists -->
+              <select name="id" data-productid="{{ product.id }}" id="productSelect-{{ section.id }}" class="product-variant-selector product-variants-{{ section.id }}" style="display: none;">
+                {% for variant in product.variants %}
+                  {% if variant.available %}
+                    <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }}</option>
+                  {% else %}
+                    <option disabled="disabled">
+                      {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                    </option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            {% endunless %}
+          {% else %}
+            <!-- Dropdown Selector (Default) -->
+            <select name="id" data-productid="{{ product.id }}" id="productSelect-{{ section.id }}" class="product-variants product-variants-{{ section.id }}">
+              {% for variant in product.variants %}
+                {% if variant.available %}
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ price | money_with_currency }}</option>
+                {% else %}
+                  <option disabled="disabled">
+                    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          {% endif %}
+          {% endunless %}
 
           {% if section.settings.product_quantity_enable %}
             <label for="quantity" class="quantity-selector quantity-selector-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
@@ -310,7 +506,7 @@ Modify at your own peril, a broken website is the likely result.
           {% endif %}
 
           <div class="payment-buttons">
-            <button type="submit" name="add" id="addToCart-{{ section.id }}" class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}"{% unless variant.available %} disabled="disabled"{% endunless %}>
+            <button style="{% if section.settings.hide_add_to_cart %}display:none;{% endif %}" type="submit" name="add" id="addToCart-{{ section.id }}" class="btn btn--add-to-cart{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}"{% unless variant.available %} disabled="disabled"{% endunless %}>
               <span class="icon icon-cart"></span>
               <span id="addToCartText-{{ section.id }}">
                 {% if variant.available %}
@@ -328,7 +524,7 @@ Modify at your own peril, a broken website is the likely result.
         {% endform %}
 
         <a class="full-details text-link"{% unless section_onboarding %} href="{{ product.url }}?variant={{ variant.id }}"{% endunless %}>
-          {{ 'products.product.full_details' | t }} &#x2192;
+          <h5>{{ 'products.product.full_details' | t }} &#x2192;</h5>
         </a>
       {% endif %}
     </div>
@@ -423,10 +619,73 @@ Modify at your own peril, a broken website is the likely result.
     },
     {
       "type": "checkbox",
+      "id": "product_sku_enable",
+      "label": {
+        "en": "Show product sku"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "product_upc_enable",
+      "label": {
+        "en": "Show product upc"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "product_quantity_message",
+      "label": {
+        "en": "Show in/out of stock message"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "house_hasson_catalog",
+      "label": {
+        "en": "Use House Hasson Inventory Tracker"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_clickable_boxes",
+      "label": {
+        "en": "Enable Clickable Box Option Selector"
+      },
+      "default": false,
+      "info": {
+        "en": "Replace the dropdown with clickable boxes for product variant selection"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_variant_selector",
+      "label": {
+        "en": "Hide option selector"
+      },
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "product_savings",
+      "label": {
+        "en": "Show Savings"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "hide_price",
       "label": {
-        "en": "Hide price",
+        "en": "Hide price"
       }
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_add_to_cart",
+      "label": {
+        "en": "Hide add to cart button"
+      },
+      "default": false
     },
     {
       "type": "checkbox",
@@ -482,7 +741,7 @@ Modify at your own peril, a broken website is the likely result.
       "label": {
         "da": "Vis dynamisk betalingsknap",
         "de": "Dynamischen Checkout Button anzeigen",
-        "en": "Show dynamic checkout button",
+        "en": "Show Buy It Now Button",
         "es": "Mostrar botón de pago dinámico",
         "fi": "Näytä dynaaminen kassapainike",
         "fr": "Afficher le bouton de passage à la caisse dynamique",
