@@ -25,6 +25,12 @@ Modify at your own peril, a broken website is the likely result.
   {%- assign price = variant.price -%}
 {%- endif -%}
 
+<!-- Featured Product Media Wrapper with Alpine.js -->
+{% for media in product.media %}
+    {% assign first_media_id = product.media.first.id %}
+{% endfor %}
+<div x-data="{ selectedId: {{ first_media_id }} }" class="featured-product-media-wrapper">
+
 {% if section.settings.product_quantity_enable == false %}
   <style>
     .selector-wrapper select, .product-variants select {
@@ -32,6 +38,193 @@ Modify at your own peril, a broken website is the likely result.
     }
   </style>
 {% endif %}
+
+<!-- Featured Product Specific Styles - Scoped to avoid conflicts -->
+<style>
+  /* Featured Product Gallery Styles */
+  #ProductSection-{{ section.id }} .featured-product-gallery {
+    margin-bottom: 20px;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product__image-wrapper {
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product__image-wrapper img {
+    position: relative;
+    max-height: 400px;
+    width: initial;
+    cursor: zoom-in;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-image-container {
+    display: block;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-video-container {
+    display: block;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-video-wrapper {
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Featured Product Thumbnails */
+  #ProductSection-{{ section.id }} .featured-product-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-thumb-item {
+    flex: 0 0 auto;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-thumb-button {
+    border: 2px solid transparent;
+    border-radius: 5px;
+    padding: 5px;
+    background: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-thumb-button:hover {
+    border-color: #007bff;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-thumb-button img {
+    display: block;
+    border-radius: 3px;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-video-thumb {
+    position: relative;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-video-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #ProductSection-{{ section.id }} .featured-product-video-overlay svg {
+    width: 16px;
+    height: 16px;
+    color: white;
+  }
+  
+  /* Featured Product Zoom Styles */
+  #ProductSection-{{ section.id }} .featured-product-zoom-container {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    display: none;
+    z-index: 10;
+    pointer-events: none;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    #ProductSection-{{ section.id }} .featured-product-thumbnails {
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+  }
+</style>
+
+<!-- Featured Product Specific JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Featured Product Image Zoom Functionality
+  function setupFeaturedProductZoom() {
+    const featuredImages = document.querySelectorAll('#ProductSection-{{ section.id }} .featured-product-main-image');
+    
+    featuredImages.forEach(image => {
+      let zoomContainer = null;
+      
+      image.addEventListener('mouseenter', function(e) {
+        if (window.innerWidth <= 767 || ('ontouchstart' in window) || navigator.maxTouchPoints) {
+          return; // Disable zoom on mobile/touch devices
+        }
+        
+        if (!zoomContainer) {
+          zoomContainer = document.createElement('div');
+          zoomContainer.classList.add('featured-product-zoom-container');
+          image.parentNode.appendChild(zoomContainer);
+        }
+        
+        const zoomImageUrl = image.getAttribute('data-zoom-image') || image.src;
+        zoomContainer.style.backgroundImage = `url('${zoomImageUrl}')`;
+        zoomContainer.style.display = 'block';
+        
+        updateFeaturedZoomPosition(e, image, zoomContainer);
+      });
+      
+      image.addEventListener('mousemove', function(e) {
+        if (zoomContainer) {
+          updateFeaturedZoomPosition(e, image, zoomContainer);
+        }
+      });
+      
+      image.addEventListener('mouseleave', function() {
+        if (zoomContainer) {
+          zoomContainer.style.display = 'none';
+        }
+      });
+    });
+  }
+  
+  function updateFeaturedZoomPosition(e, originalImage, zoomContainer) {
+    const originalRect = originalImage.getBoundingClientRect();
+    const mouseX = e.clientX - originalRect.left;
+    const mouseY = e.clientY - originalRect.top;
+    
+    const percentX = (mouseX / originalRect.width);
+    const percentY = (mouseY / originalRect.height);
+    
+    const zoomLevel = 2.5;
+    const backgroundSizeX = originalImage.naturalWidth * zoomLevel;
+    const backgroundSizeY = originalImage.naturalHeight * zoomLevel;
+    
+    const backgroundPosX = -percentX * (backgroundSizeX - zoomContainer.offsetWidth);
+    const backgroundPosY = -percentY * (backgroundSizeY - zoomContainer.offsetHeight);
+    
+    zoomContainer.style.backgroundSize = `${backgroundSizeX}px ${backgroundSizeY}px`;
+    zoomContainer.style.backgroundPosition = `${backgroundPosX}px ${backgroundPosY}px`;
+    zoomContainer.style.left = `${mouseX + 20}px`;
+    zoomContainer.style.top = `${mouseY + 20}px`;
+  }
+  
+  // Initialize zoom functionality
+  setupFeaturedProductZoom();
+});
+</script>
 
 
 <script>
@@ -113,52 +306,109 @@ Modify at your own peril, a broken website is the likely result.
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
-  <div class="grid-item large--two-fifths">
+  <div class="grid-item large--one-half">
     <div class="grid">
       <div class="grid-item large--eleven-twelfths text-center">
-        <div class="product-photo-container" id="productPhotoContainer-{{ section.id }}">
-          {% unless section_onboarding %}
+        {% if product.media.size > 0 and section_onboarding == false %}
+          <!-- Featured Product Image Gallery with Zoom and Thumbnails -->
+          <div class="featured-product-gallery" id="featuredProductGallery-{{ section.id }}">
             {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            {% for image in product.images %}
-              {%- capture img_wrapper_id -%}productPhotoWrapper-{{ section.id }}-{{ image.id }}{%- endcapture -%}
-              {%- assign max_width = 690 -%}
-              {%- assign max_height = 1000 -%}
-
-              {%- include 'image-logic' with width: max_width, height: max_height -%}
-
-              {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-              <div id="{{ img_wrapper_id }}" class="lazyload__image-wrapper{% unless image == featured_image %} hide{% endunless %}" data-image-id="{{ image.id }}" style="max-width: {{ max_width }}px">
-                <div class="no-js product__image-wrapper" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%;">
-                    <img id="{{ img_id }}"
-                      {% if forloop.first == true %}
-                      src="{{ featured_image | img_url: '300x300' }}"
-                      {% endif %}
-                      class="lazyload no-js lazypreload"
-                      data-src="{{ img_url }}"
-                      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-                      data-aspectratio="{{ image.aspect_ratio }}"
-                      data-sizes="auto"
-                      alt="{{ image.alt | escape }}"
->
-                </div>
-              </div>
-              {% if forloop.first == true %}
-                <noscript>
-                  <img src="{{ image | img_url: '580x' }}"
-                    srcset="{{ image | img_url: '580x' }} 1x, {{ image | img_url: '580x', scale: 2 }} 2x"
-                    alt="{{ image.alt }}" style="opacity:1;">
-                </noscript>
-              {% endif %}
-          {% endfor %}
-          {% else %}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {% endunless %}
-        </div>
+            {% for media in product.media %}
+              {% case media.media_type %}
+                {% when 'image' %}
+                  {%- capture media_wrapper_id -%}featuredPhotoWrapper-{{ section.id }}-{{ media.id }}{%- endcapture -%}
+                  {%- assign max_width = 700 -%}
+                  {%- assign max_height = 1024 -%}
+                  
+                  <div 
+                    x-show="selectedId === {{ media.id }}" class="featured-product-image-container"
+                    id="{{ media_wrapper_id }}" 
+                    data-image-id="{{ media.id }}" 
+                    style="max-width: {{ max_width }}px"
+                  >
+                    <div class="featured-product__image-wrapper">
+                      <div class="featured-product-image-zoom-wrapper">
+                        <a href="#" class="featured-product-zoom-trigger" data-zoom-image="{{ media | img_url: '1024x1024', scale: 2 }}">
+                          <img 
+                            id="featured-image-{{ media.id }}"
+                            loading="lazy"
+                            src="{{ media | img_url: '500x500' }}"
+                            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                            data-aspectratio="{{ media.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="{{ media.alt | replace: '"', '' }}"
+                            class="featured-product-main-image"
+                            width="{{ media.width }}"
+                            height="{{ media.height }}"
+                          >
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                {% when 'external_video' %}
+                  <div 
+                    x-show="selectedId === {{ media.id }}" class="featured-product-video-container"
+                    id="{{ media_wrapper_id }}" 
+                    data-image-id="{{ media.id }}" 
+                    style="max-width: {{ max_width }}px"
+                  > 
+                    <div class="featured-product-video-wrapper">
+                      <div class="featured-product-video">
+                        {{ media | external_video_tag }}
+                      </div>
+                    </div>
+                  </div>
+              {% endcase %}
+            {% endfor %}
+            
+            <!-- Featured Product Thumbnails -->
+            {% if product.media.size > 1 %}
+              <ul class="featured-product-thumbnails" id="featuredProductThumbs-{{ section.id }}">
+                {% for media in product.media %}
+                  {% case media.media_type %}
+                    {% when 'image' %}
+                      <li class="featured-product-thumb-item">
+                        <button
+                          id="featured-thumb-{{ media.id }}"
+                          @click="selectedId = {{ media.id }}"
+                          type="button"
+                          class="featured-product-thumb-button">               
+                          <img src="{{ media | img_url: '100x100'}}" alt="{{ media.alt | replace: '"', '' }}" width="100" height="100">
+                        </button>
+                      </li>
+                    {% when 'external_video' %}
+                      <li class="featured-product-thumb-item">
+                        <button
+                          id="featured-thumb-{{ media.id }}"
+                          @click="selectedId = {{ media.id }}"
+                          type="button"
+                          class="featured-product-thumb-button featured-product-video-thumb">                    
+                          <img src="{{ media | img_url: '100x100'}}" alt="{{ media.alt | replace: '"', '' }}" width="100" height="100">
+                          <div class="featured-product-video-overlay">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z"></path>
+                            </svg>
+                          </div>
+                        </button>
+                      </li>
+                  {% endcase %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% elsif section_onboarding %}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% else %}
+          <div class="featured-product-no-image">
+            <p>No Image Available</p>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
 
-  <div class="grid-item large--three-fifths">
+  <div class="grid-item large--one-half">
 
     <h1 class="h2" itemprop="name">{{ title }}</h1>
 
@@ -408,6 +658,7 @@ Modify at your own peril, a broken website is the likely result.
     {{ product | json }}
   </script>
 {% endunless %}
+</div><!-- Close featured-product-media-wrapper -->
 </div>
 
 
