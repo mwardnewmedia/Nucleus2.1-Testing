@@ -286,6 +286,14 @@ Modify at your own peril, a broken website is the likely result.
 
       {% form 'product', product, data-productid: product.id, class:form_class, id:form_id, data-product-form: '' %}
           {% unless section.settings.hide_variant_selector %}
+            {% assign variantCount = product.variants | size  %} 
+            {% unless variantCount >= 1 and product.variants.first.title == "Default Title" %}
+              {% if section.settings.hide_add_to_cart %}
+                <label>Options</label>
+              {% else %}
+                <label>Select</label>
+              {% endif %}
+            {% endunless %}
           {% if section.settings.enable_clickable_boxes %}
             {% assign has_only_default_title = false %}
             {% if product.variants.size == 1 and product.variants.first.title == "Default Title" %}
