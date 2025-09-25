@@ -280,7 +280,7 @@ Modify at your own peril, a broken website is the likely result.
       {% else %}
         {% capture "form_class" -%}
           addToCartForm{% if section.settings.enable_payment_button %} addToCartForm--payment-button{% endif %}
-        {%- endcapture %}
+        {%- endcapture %} 
 
       {%- capture "form_id" -%}addToCartForm-{{ section.id }}{%- endcapture -%}
 
@@ -368,7 +368,7 @@ Modify at your own peril, a broken website is the likely result.
           {% endunless %}
 
           {% if section.settings.product_quantity_enable %}
-            <div class="pdp-quantity-selector">
+            <div {% if section.settings.hide_add_to_cart %}style="display: none;"{% endif %} class="pdp-quantity-selector">
               <span class="quantity-selector-wrapper">
                 <label class="quantity-selector quantity-selector-{{ section.id }}" for="quantity">{{ 'products.product.quantity' | t }}</label>
                 <div class="js-qty">
