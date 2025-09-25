@@ -25,6 +25,19 @@ Modify at your own peril, a broken website is the likely result.
   {%- assign price = variant.price -%}
 {%- endif -%}
 
+<!-- Load variants for media switching -->
+<script>
+  window.featuredProductVariants_{{ section.id }} = [
+    {% for variant in product.variants %}
+    {
+        id: {{ variant.id }},
+        title: "{{ variant.title | escape }}",
+        featured_media_id: {{ variant.featured_media.id | default: 'null' }}
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+</script>
+
 {% if section.settings.product_quantity_enable == false %}
   <style>
     .selector-wrapper select, .product-variants select {
@@ -65,7 +78,7 @@ Modify at your own peril, a broken website is the likely result.
       }
     });
     
-    // Featured Product Clickable Box Selector Functionality
+    // Featured Product Clickable Box Selector Functionality with Media Switching
     $('#ProductSection-{{ section.id }} .variant-selector-boxes .variant-box').on('click', function() {
       var $box = $(this);
       var variantId = $box.data('variant-id');
@@ -93,6 +106,39 @@ Modify at your own peril, a broken website is the likely result.
       if (barcode) {
         $('#ProductSection-{{ section.id }} .variant-barcode').text(barcode);
       }
+      
+      // Switch media based on variant
+      var featuredMediaId = $box.data('featured-media-id');
+      if (featuredMediaId) {
+        // Find the Alpine.js component and update selectedId
+        var $alpineComponent = $('#ProductSection-{{ section.id }}').find('[x-data*="selectedId"]');
+        if ($alpineComponent.length > 0) {
+          // Trigger Alpine.js update
+          $alpineComponent[0].__x.$data.selectedId = featuredMediaId;
+        }
+      }
+    });
+    
+    // Featured Product Dropdown Selector Functionality with Media Switching
+    $('#ProductSection-{{ section.id }} .product-variants-{{ section.id }}').on('change', function() {
+      var selectedVariantId = $(this).val();
+      var variants = window.featuredProductVariants_{{ section.id }};
+      
+      if (variants && selectedVariantId) {
+        // Find the selected variant
+        var selectedVariant = variants.find(function(variant) {
+          return variant.id == selectedVariantId;
+        });
+        
+        if (selectedVariant && selectedVariant.featured_media_id) {
+          // Find the Alpine.js component and update selectedId
+          var $alpineComponent = $('#ProductSection-{{ section.id }}').find('[x-data*="selectedId"]');
+          if ($alpineComponent.length > 0) {
+            // Trigger Alpine.js update
+            $alpineComponent[0].__x.$data.selectedId = selectedVariant.featured_media_id;
+          }
+        }
+      }
     });
   });
 </script>
@@ -105,55 +151,27 @@ Modify at your own peril, a broken website is the likely result.
     </div>
   {% endif %}
 
-{% include 'breadcrumb' %}
+{% render 'breadcrumb' %}
 
 <hr>
 
 <div class="grid" itemscope itemtype="http://schema.org/Product">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
-  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | image_url: 'grande' }}">
 
   <div class="grid-item large--two-fifths">
     <div class="grid">
       <div class="grid-item large--eleven-twelfths text-center">
-        <div class="product-photo-container" id="productPhotoContainer-{{ section.id }}">
-          {% unless section_onboarding %}
-            {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-            {% for image in product.images %}
-              {%- capture img_wrapper_id -%}productPhotoWrapper-{{ section.id }}-{{ image.id }}{%- endcapture -%}
-              {%- assign max_width = 690 -%}
-              {%- assign max_height = 1000 -%}
-
-              {%- include 'image-logic' with width: max_width, height: max_height -%}
-
-              {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-              <div id="{{ img_wrapper_id }}" class="lazyload__image-wrapper{% unless image == featured_image %} hide{% endunless %}" data-image-id="{{ image.id }}" style="max-width: {{ max_width }}px">
-                <div class="no-js product__image-wrapper" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100}}%;">
-                    <img id="{{ img_id }}"
-                      {% if forloop.first == true %}
-                      src="{{ featured_image | img_url: '300x300' }}"
-                      {% endif %}
-                      class="lazyload no-js lazypreload"
-                      data-src="{{ img_url }}"
-                      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-                      data-aspectratio="{{ image.aspect_ratio }}"
-                      data-sizes="auto"
-                      alt="{{ image.alt | escape }}"
->
-                </div>
-              </div>
-              {% if forloop.first == true %}
-                <noscript>
-                  <img src="{{ image | img_url: '580x' }}"
-                    srcset="{{ image | img_url: '580x' }} 1x, {{ image | img_url: '580x', scale: 2 }} 2x"
-                    alt="{{ image.alt }}" style="opacity:1;">
-                </noscript>
-              {% endif %}
+        {% unless section_onboarding %}
+          {% for media in product.media %}
+            {% assign first_media_id = product.media.first.id %}
           {% endfor %}
-          {% else %}
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {% endunless %}
+        <div x-data="{ selectedId: {{ first_media_id }} }">    
+          {% render 'featured-product-image-selector' %}
         </div>
+        {% else %}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endunless %}
       </div>
     </div>
   </div>
@@ -202,14 +220,14 @@ Modify at your own peril, a broken website is the likely result.
 
     <div id="variantQuantity-{{ section.id }}" class="variant-quantity">
       {% if section.settings.product_quantity_message and section.settings.house_hasson_catalog == false %}
-        {% include 'svg-definitions' with 'stock-icon' %}
+        {% render 'svg-definitions', icon: 'stock-icon' %}
         <span id="variantQuantity-{{ section.id }}__message">
         Available Inventory: {{ qty }}
         </span>
       {% endif %}
       
       {% if section.settings.product_quantity_message and section.settings.house_hasson_catalog %}
-        {% include 'svg-definitions' with 'stock-icon' %} 
+        {% render 'svg-definitions', icon: 'stock-icon' %} 
         <span id="variantQuantity-{{ section.id }}__message">
         Available Inventory: 
           {% if qty == 0 %}
@@ -237,16 +255,14 @@ Modify at your own peril, a broken website is the likely result.
       <ul class="inline-list product-meta" data-price>
         <li>
           <span id="productPrice-{{ section.id }}" class="h1">
-            {% include 'price' with price %}
+            {% render 'price', price: price %}
           </span>
-          {% include 'product-unit-price' variant: variant %}
+          {% render 'product-unit-price', variant: variant %}
         </li>
         {% if compare_at_price > price and section.settings.product_savings %}
         <li>
           <span id="comparePrice-{{ section.id }}" class="sale-tag large">
-            {% assign compare_price = compare_at_price %}
-            {% assign product_price = price %}
-            {% include 'price-sale' %}
+            {% render 'price-sale' %}
           </span>
         </li>
         {% endif %}
@@ -278,16 +294,17 @@ Modify at your own peril, a broken website is the likely result.
           </button>
         </div>
       {% else %}
-        {% capture "form_class" -%}
-          addToCartForm{% if section.settings.enable_payment_button %} addToCartForm--payment-button{% endif %}
-        {%- endcapture %} 
+        {%- assign form_class = 'addToCartForm' -%}
+        {% if section.settings.enable_payment_button %}
+          {%- assign form_class = form_class | append: ' addToCartForm--payment-button' -%}
+        {% endif %}
 
-      {%- capture "form_id" -%}addToCartForm-{{ section.id }}{%- endcapture -%}
+        {%- assign form_id = 'addToCartForm-' | append: section.id -%}
 
       {% form 'product', product, data-productid: product.id, class:form_class, id:form_id, data-product-form: '' %}
           {% unless section.settings.hide_variant_selector %}
-            {% assign variantCount = product.variants | size  %} 
-            {% unless variantCount >= 1 and product.variants.first.title == "Default Title" %}
+            {% assign variant_count = product.variants | size  %} 
+            {% unless variant_count >= 1 and product.variants.first.title == "Default Title" %}
               {% if section.settings.hide_add_to_cart %}
                 <label>Options</label>
               {% else %}
@@ -405,7 +422,7 @@ Modify at your own peril, a broken website is the likely result.
     </div>
 
     {% if section.settings.social_sharing_products %}
-      {% include 'social-sharing' %}
+      {% render 'social-sharing' %}
     {% endif %}
 
   </div>
@@ -417,6 +434,48 @@ Modify at your own peril, a broken website is the likely result.
   </script>
 {% endunless %}
 </div>
+
+<style>
+  /* Featured Product Specific Styles - Scoped to prevent conflicts */
+  #ProductSection-{{ section.id }} .featured-product__image-wrapper img {
+    position: relative!important;
+    max-height: 100%!important;
+    width:initial!important;
+  }
+  #ProductSection-{{ section.id }} .featured-product__image-wrapper {
+    overflow:initial!important;
+    margin-bottom:20px!important;
+    border:1px solid #eaeaea;
+    border-radius:5px;
+    padding:20px;
+  }
+  #ProductSection-{{ section.id }} .featured-product__image-wrapper img {
+    max-height: 400px !important;
+  }
+  #ProductSection-{{ section.id }} .featured-product-video-overlay {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    height: 100%;
+    transition: .5s ease;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  #ProductSection-{{ section.id }} .featured-product-video-overlay svg {
+    width:50px;
+    height:50px;
+    background: rgba(256,256,256,.5);
+    border-radius: 100%;
+  }
+</style>
 
 
 
