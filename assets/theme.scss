@@ -2613,17 +2613,17 @@ $shareBorderColor: #ececec;
       height: 44px;
       border:1px solid $colorSearchBorder;
       background-color: #fff;
-      color: color-control($headerButtonAndSearch);
+      color: $colorTextBody!important;
     }
   }
 }
 
 .site-header input::-webkit-input-placeholder {
-  color: color-control($headerButtonAndSearch);
+  color: $colorTextBody!important;
 }
 
 .site-header input::-moz-placeholder {
-  color: color-control($headerButtonAndSearch);
+  color: $colorTextBody!important;
 }
 
 
