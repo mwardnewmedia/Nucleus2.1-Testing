@@ -257,7 +257,7 @@
               {% assign metafield_message = settings.rental_metafield_message_5 %}
           {% endcase %}
           
-          {% if enabled %}
+          {% if enabled and metafield_condition != blank and metafield_message != blank %}
             {% assign metafield_value = '' %}
             {% assign current_priority = 0 %}
             
