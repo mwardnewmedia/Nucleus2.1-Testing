@@ -517,6 +517,219 @@
         "label": {
           "en": "True Value Styles"
         }
+      },
+      {
+        "type": "header",
+        "content": {
+          "en": "Rental Metafield Conditional Messages"
+        }
+      },
+      {
+        "type": "paragraph",
+        "content": {
+          "en": "Display custom messages on rental products based on their metafield values (Department, Category, or Subcategory). These messages will override the Hidden Rental Rates Disclaimer when rental rates are hidden."
+        }
+      },
+      {
+        "id": "rental_metafield_message_color",
+        "type": "color",
+        "label": "Rental Metafield Message Color",
+        "default": "#000"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rental_metafield_message_1",
+        "label": "Enable Rental Metafield Message 1",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "rental_metafield_type_1",
+        "label": "Metafield Type 1",
+        "options": [
+          {
+            "value": "department",
+            "label": "Department"
+          },
+          {
+            "value": "category",
+            "label": "Category"
+          },
+          {
+            "value": "subcategory",
+            "label": "Subcategory"
+          }
+        ],
+        "default": "department"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_condition_1",
+        "label": "Metafield Condition 1",
+        "default": "Department Value",
+        "info": "Enter the exact metafield value to match (case-sensitive)"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_message_1",
+        "label": "Metafield Message 1",
+        "default": "Rental Message"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rental_metafield_message_2",
+        "label": "Enable Rental Metafield Message 2",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "rental_metafield_type_2",
+        "label": "Metafield Type 2",
+        "options": [
+          {
+            "value": "department",
+            "label": "Department"
+          },
+          {
+            "value": "category",
+            "label": "Category"
+          },
+          {
+            "value": "subcategory",
+            "label": "Subcategory"
+          }
+        ],
+        "default": "department"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_condition_2",
+        "label": "Metafield Condition 2",
+        "default": "Department Value",
+        "info": "Enter the exact metafield value to match (case-sensitive)"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_message_2",
+        "label": "Metafield Message 2",
+        "default": "Rental Message"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rental_metafield_message_3",
+        "label": "Enable Rental Metafield Message 3",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "rental_metafield_type_3",
+        "label": "Metafield Type 3",
+        "options": [
+          {
+            "value": "department",
+            "label": "Department"
+          },
+          {
+            "value": "category",
+            "label": "Category"
+          },
+          {
+            "value": "subcategory",
+            "label": "Subcategory"
+          }
+        ],
+        "default": "department"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_condition_3",
+        "label": "Metafield Condition 3",
+        "default": "Department Value",
+        "info": "Enter the exact metafield value to match (case-sensitive)"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_message_3",
+        "label": "Metafield Message 3",
+        "default": "Rental Message"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rental_metafield_message_4",
+        "label": "Enable Rental Metafield Message 4",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "rental_metafield_type_4",
+        "label": "Metafield Type 4",
+        "options": [
+          {
+            "value": "department",
+            "label": "Department"
+          },
+          {
+            "value": "category",
+            "label": "Category"
+          },
+          {
+            "value": "subcategory",
+            "label": "Subcategory"
+          }
+        ],
+        "default": "department"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_condition_4",
+        "label": "Metafield Condition 4",
+        "default": "Department Value",
+        "info": "Enter the exact metafield value to match (case-sensitive)"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_message_4",
+        "label": "Metafield Message 4",
+        "default": "Rental Message"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_rental_metafield_message_5",
+        "label": "Enable Rental Metafield Message 5",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "rental_metafield_type_5",
+        "label": "Metafield Type 5",
+        "options": [
+          {
+            "value": "department",
+            "label": "Department"
+          },
+          {
+            "value": "category",
+            "label": "Category"
+          },
+          {
+            "value": "subcategory",
+            "label": "Subcategory"
+          }
+        ],
+        "default": "department"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_condition_5",
+        "label": "Metafield Condition 5",
+        "default": "Department Value",
+        "info": "Enter the exact metafield value to match (case-sensitive)"
+      },
+      {
+        "type": "text",
+        "id": "rental_metafield_message_5",
+        "label": "Metafield Message 5",
+        "default": "Rental Message"
       }
     ]
   },
