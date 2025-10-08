@@ -531,12 +531,6 @@
         }
       },
       {
-        "id": "rental_metafield_message_color",
-        "type": "color",
-        "label": "Rental Metafield Message Color",
-        "default": "#000"
-      },
-      {
         "type": "checkbox",
         "id": "enable_rental_metafield_message_1",
         "label": "Enable Rental Metafield Message 1",
