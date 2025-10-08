@@ -221,178 +221,87 @@
         {% endunless %}
       {% endif %}
 
-        {% comment %} Check for rental metafield conditional messages {% endcomment %}
+        {% comment %} Check for rental metafield conditional messages with hierarchy {% endcomment %}
+        {% comment %} Priority: brand > subcategory > category > department {% endcomment %}
         {% assign metafield_message_displayed = false %}
+        {% assign best_match_priority = 0 %}
+        {% assign best_match_message = '' %}
         
-        {% if settings.enable_rental_metafield_message_1 %}
-          {% assign metafield_type_1 = settings.rental_metafield_type_1 %}
-          {% assign metafield_condition_1 = settings.rental_metafield_condition_1 %}
-          {% assign metafield_value_1 = '' %}
+        {% comment %} Check all 5 conditions and track the highest priority match {% endcomment %}
+        {% for i in (1..5) %}
+          {% case i %}
+            {% when 1 %}
+              {% assign enabled = settings.enable_rental_metafield_message_1 %}
+              {% assign metafield_type = settings.rental_metafield_type_1 %}
+              {% assign metafield_condition = settings.rental_metafield_condition_1 %}
+              {% assign metafield_message = settings.rental_metafield_message_1 %}
+            {% when 2 %}
+              {% assign enabled = settings.enable_rental_metafield_message_2 %}
+              {% assign metafield_type = settings.rental_metafield_type_2 %}
+              {% assign metafield_condition = settings.rental_metafield_condition_2 %}
+              {% assign metafield_message = settings.rental_metafield_message_2 %}
+            {% when 3 %}
+              {% assign enabled = settings.enable_rental_metafield_message_3 %}
+              {% assign metafield_type = settings.rental_metafield_type_3 %}
+              {% assign metafield_condition = settings.rental_metafield_condition_3 %}
+              {% assign metafield_message = settings.rental_metafield_message_3 %}
+            {% when 4 %}
+              {% assign enabled = settings.enable_rental_metafield_message_4 %}
+              {% assign metafield_type = settings.rental_metafield_type_4 %}
+              {% assign metafield_condition = settings.rental_metafield_condition_4 %}
+              {% assign metafield_message = settings.rental_metafield_message_4 %}
+            {% when 5 %}
+              {% assign enabled = settings.enable_rental_metafield_message_5 %}
+              {% assign metafield_type = settings.rental_metafield_type_5 %}
+              {% assign metafield_condition = settings.rental_metafield_condition_5 %}
+              {% assign metafield_message = settings.rental_metafield_message_5 %}
+          {% endcase %}
           
-          {% if metafield_type_1 == 'department' %}
-            {% assign metafield_value_1 = product.metafields.rentalhub.department %}
-          {% elsif metafield_type_1 == 'category' %}
-            {% assign metafield_value_1 = product.metafields.rentalhub.category %}
-          {% elsif metafield_type_1 == 'subcategory' %}
-            {% assign metafield_value_1 = product.metafields.rentalhub.subcategory %}
-          {% elsif metafield_type_1 == 'brand' %}
-            {% assign metafield_value_1 = product.metafields.rentalhub.brand | default: product.vendor %}
+          {% if enabled %}
+            {% assign metafield_value = '' %}
+            {% assign current_priority = 0 %}
+            
+            {% if metafield_type == 'brand' %}
+              {% assign metafield_value = product.metafields.rentalhub.brand | default: product.vendor %}
+              {% assign current_priority = 4 %}
+            {% elsif metafield_type == 'subcategory' %}
+              {% assign metafield_value = product.metafields.rentalhub.subcategory %}
+              {% assign current_priority = 3 %}
+            {% elsif metafield_type == 'category' %}
+              {% assign metafield_value = product.metafields.rentalhub.category %}
+              {% assign current_priority = 2 %}
+            {% elsif metafield_type == 'department' %}
+              {% assign metafield_value = product.metafields.rentalhub.department %}
+              {% assign current_priority = 1 %}
+            {% endif %}
+            
+            {% comment %} Handle both string values and list metafields {% endcomment %}
+            {% if metafield_value.value %}
+              {% assign metafield_value = metafield_value.value %}
+            {% endif %}
+            
+            {% comment %} Check if this condition matches {% endcomment %}
+            {% assign is_match = false %}
+            {% if metafield_value == metafield_condition %}
+              {% assign is_match = true %}
+            {% elsif metafield_value contains metafield_condition %}
+              {% assign is_match = true %}
+            {% endif %}
+            
+            {% comment %} If it matches and has higher priority, save it {% endcomment %}
+            {% if is_match and current_priority > best_match_priority %}
+              {% assign best_match_priority = current_priority %}
+              {% assign best_match_message = metafield_message %}
+            {% endif %}
           {% endif %}
-          
-          {% comment %} Handle both string values and list metafields {% endcomment %}
-          {% assign metafield_match_1 = false %}
-          {% if metafield_value_1.value %}
-            {% assign metafield_value_1 = metafield_value_1.value %}
-          {% endif %}
-          
-          {% if metafield_value_1 == metafield_condition_1 %}
-            {% assign metafield_match_1 = true %}
-          {% elsif metafield_value_1 contains metafield_condition_1 %}
-            {% assign metafield_match_1 = true %}
-          {% endif %}
-          
-          {% if metafield_match_1 %}
-            <div class="rental-metafield-message">
-              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_1 }}</p>
-            </div>
-            {% assign metafield_message_displayed = true %}
-          {% endif %}
-        {% endif %}
+        {% endfor %}
         
-        {% if settings.enable_rental_metafield_message_2 and metafield_message_displayed == false %}
-          {% assign metafield_type_2 = settings.rental_metafield_type_2 %}
-          {% assign metafield_condition_2 = settings.rental_metafield_condition_2 %}
-          {% assign metafield_value_2 = '' %}
-          
-          {% if metafield_type_2 == 'department' %}
-            {% assign metafield_value_2 = product.metafields.rentalhub.department %}
-          {% elsif metafield_type_2 == 'category' %}
-            {% assign metafield_value_2 = product.metafields.rentalhub.category %}
-          {% elsif metafield_type_2 == 'subcategory' %}
-            {% assign metafield_value_2 = product.metafields.rentalhub.subcategory %}
-          {% elsif metafield_type_2 == 'brand' %}
-            {% assign metafield_value_2 = product.metafields.rentalhub.brand | default: product.vendor %}
-          {% endif %}
-          
-          {% assign metafield_match_2 = false %}
-          {% if metafield_value_2.value %}
-            {% assign metafield_value_2 = metafield_value_2.value %}
-          {% endif %}
-          
-          {% if metafield_value_2 == metafield_condition_2 %}
-            {% assign metafield_match_2 = true %}
-          {% elsif metafield_value_2 contains metafield_condition_2 %}
-            {% assign metafield_match_2 = true %}
-          {% endif %}
-          
-          {% if metafield_match_2 %}
-            <div class="rental-metafield-message">
-              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_2 }}</p>
-            </div>
-            {% assign metafield_message_displayed = true %}
-          {% endif %}
-        {% endif %}
-        
-        {% if settings.enable_rental_metafield_message_3 and metafield_message_displayed == false %}
-          {% assign metafield_type_3 = settings.rental_metafield_type_3 %}
-          {% assign metafield_condition_3 = settings.rental_metafield_condition_3 %}
-          {% assign metafield_value_3 = '' %}
-          
-          {% if metafield_type_3 == 'department' %}
-            {% assign metafield_value_3 = product.metafields.rentalhub.department %}
-          {% elsif metafield_type_3 == 'category' %}
-            {% assign metafield_value_3 = product.metafields.rentalhub.category %}
-          {% elsif metafield_type_3 == 'subcategory' %}
-            {% assign metafield_value_3 = product.metafields.rentalhub.subcategory %}
-          {% elsif metafield_type_3 == 'brand' %}
-            {% assign metafield_value_3 = product.metafields.rentalhub.brand | default: product.vendor %}
-          {% endif %}
-          
-          {% assign metafield_match_3 = false %}
-          {% if metafield_value_3.value %}
-            {% assign metafield_value_3 = metafield_value_3.value %}
-          {% endif %}
-          
-          {% if metafield_value_3 == metafield_condition_3 %}
-            {% assign metafield_match_3 = true %}
-          {% elsif metafield_value_3 contains metafield_condition_3 %}
-            {% assign metafield_match_3 = true %}
-          {% endif %}
-          
-          {% if metafield_match_3 %}
-            <div class="rental-metafield-message">
-              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_3 }}</p>
-            </div>
-            {% assign metafield_message_displayed = true %}
-          {% endif %}
-        {% endif %}
-        
-        {% if settings.enable_rental_metafield_message_4 and metafield_message_displayed == false %}
-          {% assign metafield_type_4 = settings.rental_metafield_type_4 %}
-          {% assign metafield_condition_4 = settings.rental_metafield_condition_4 %}
-          {% assign metafield_value_4 = '' %}
-          
-          {% if metafield_type_4 == 'department' %}
-            {% assign metafield_value_4 = product.metafields.rentalhub.department %}
-          {% elsif metafield_type_4 == 'category' %}
-            {% assign metafield_value_4 = product.metafields.rentalhub.category %}
-          {% elsif metafield_type_4 == 'subcategory' %}
-            {% assign metafield_value_4 = product.metafields.rentalhub.subcategory %}
-          {% elsif metafield_type_4 == 'brand' %}
-            {% assign metafield_value_4 = product.metafields.rentalhub.brand | default: product.vendor %}
-          {% endif %}
-          
-          {% assign metafield_match_4 = false %}
-          {% if metafield_value_4.value %}
-            {% assign metafield_value_4 = metafield_value_4.value %}
-          {% endif %}
-          
-          {% if metafield_value_4 == metafield_condition_4 %}
-            {% assign metafield_match_4 = true %}
-          {% elsif metafield_value_4 contains metafield_condition_4 %}
-            {% assign metafield_match_4 = true %}
-          {% endif %}
-          
-          {% if metafield_match_4 %}
-            <div class="rental-metafield-message">
-              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_4 }}</p>
-            </div>
-            {% assign metafield_message_displayed = true %}
-          {% endif %}
-        {% endif %}
-        
-        {% if settings.enable_rental_metafield_message_5 and metafield_message_displayed == false %}
-          {% assign metafield_type_5 = settings.rental_metafield_type_5 %}
-          {% assign metafield_condition_5 = settings.rental_metafield_condition_5 %}
-          {% assign metafield_value_5 = '' %}
-          
-          {% if metafield_type_5 == 'department' %}
-            {% assign metafield_value_5 = product.metafields.rentalhub.department %}
-          {% elsif metafield_type_5 == 'category' %}
-            {% assign metafield_value_5 = product.metafields.rentalhub.category %}
-          {% elsif metafield_type_5 == 'subcategory' %}
-            {% assign metafield_value_5 = product.metafields.rentalhub.subcategory %}
-          {% elsif metafield_type_5 == 'brand' %}
-            {% assign metafield_value_5 = product.metafields.rentalhub.brand | default: product.vendor %}
-          {% endif %}
-          
-          {% assign metafield_match_5 = false %}
-          {% if metafield_value_5.value %}
-            {% assign metafield_value_5 = metafield_value_5.value %}
-          {% endif %}
-          
-          {% if metafield_value_5 == metafield_condition_5 %}
-            {% assign metafield_match_5 = true %}
-          {% elsif metafield_value_5 contains metafield_condition_5 %}
-            {% assign metafield_match_5 = true %}
-          {% endif %}
-          
-          {% if metafield_match_5 %}
-            <div class="rental-metafield-message">
-              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_5 }}</p>
-            </div>
-            {% assign metafield_message_displayed = true %}
-          {% endif %}
+        {% comment %} Display the highest priority match {% endcomment %}
+        {% if best_match_priority > 0 %}
+          <div class="rental-metafield-message">
+            <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ best_match_message }}</p>
+          </div>
+          {% assign metafield_message_displayed = true %}
         {% endif %}
 
         {% comment %} Only show default rental pricing disclaimer if no metafield message was displayed {% endcomment %}

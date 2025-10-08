@@ -527,7 +527,7 @@
       {
         "type": "paragraph",
         "content": {
-          "en": "Display custom messages on rental products based on their metafield values (Department, Category, or Subcategory). These messages will override the Hidden Rental Rates Disclaimer when rental rates are hidden."
+          "en": "Display custom messages on rental products based on their metafield values. Messages follow a specificity hierarchy: Brand (highest priority) > Subcategory > Category > Department (lowest priority). More specific matches will always override general ones. These messages will override the Hidden Rental Rates Disclaimer when rental rates are hidden."
         }
       },
       {
