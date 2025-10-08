@@ -558,6 +558,10 @@
           {
             "value": "subcategory",
             "label": "Subcategory"
+          },
+          {
+            "value": "brand",
+            "label": "Brand"
           }
         ],
         "default": "department"
@@ -597,6 +601,10 @@
           {
             "value": "subcategory",
             "label": "Subcategory"
+          },
+          {
+            "value": "brand",
+            "label": "Brand"
           }
         ],
         "default": "department"
@@ -636,6 +644,10 @@
           {
             "value": "subcategory",
             "label": "Subcategory"
+          },
+          {
+            "value": "brand",
+            "label": "Brand"
           }
         ],
         "default": "department"
@@ -675,6 +687,10 @@
           {
             "value": "subcategory",
             "label": "Subcategory"
+          },
+          {
+            "value": "brand",
+            "label": "Brand"
           }
         ],
         "default": "department"
@@ -714,6 +730,10 @@
           {
             "value": "subcategory",
             "label": "Subcategory"
+          },
+          {
+            "value": "brand",
+            "label": "Brand"
           }
         ],
         "default": "department"

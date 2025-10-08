@@ -224,16 +224,6 @@
         {% comment %} Check for rental metafield conditional messages {% endcomment %}
         {% assign metafield_message_displayed = false %}
         
-        {% comment %} DEBUG: Uncomment the lines below to see metafield values {% endcomment %}
-        
-        <div style="background: yellow; padding: 10px; margin: 5px 0; font-size: 11px;">
-          <strong>DEBUG - Product: {{ product.title }}</strong><br>
-          Department: "{{ product.metafields.rentalhub.department }}" (type: {{ product.metafields.rentalhub.department.type }})<br>
-          Category: "{{ product.metafields.rentalhub.category }}" (type: {{ product.metafields.rentalhub.category.type }})<br>
-          Subcategory: "{{ product.metafields.rentalhub.subcategory }}" (type: {{ product.metafields.rentalhub.subcategory.type }})<br>
-          Condition to match: "{{ settings.rental_metafield_condition_1 }}"
-        </div>
-        
         {% if settings.enable_rental_metafield_message_1 %}
           {% assign metafield_type_1 = settings.rental_metafield_type_1 %}
           {% assign metafield_condition_1 = settings.rental_metafield_condition_1 %}
@@ -245,6 +235,8 @@
             {% assign metafield_value_1 = product.metafields.rentalhub.category %}
           {% elsif metafield_type_1 == 'subcategory' %}
             {% assign metafield_value_1 = product.metafields.rentalhub.subcategory %}
+          {% elsif metafield_type_1 == 'brand' %}
+            {% assign metafield_value_1 = product.metafields.rentalhub.brand | default: product.vendor %}
           {% endif %}
           
           {% comment %} Handle both string values and list metafields {% endcomment %}
@@ -260,8 +252,8 @@
           {% endif %}
           
           {% if metafield_match_1 %}
-            <div class="rental-metafield-message">
-              <p style="color:{{ settings.rental_metafield_message_color }};{% if section.settings.capitalize_pricing_text %}text-transform: uppercase;{% endif %}">{{ settings.rental_metafield_message_1 }}</p>
+            <div class="rental-metafield-message" style="background-color: {{ settings.rental_metafield_message_color }};">
+              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_1 }}</p>
             </div>
             {% assign metafield_message_displayed = true %}
           {% endif %}
@@ -278,6 +270,8 @@
             {% assign metafield_value_2 = product.metafields.rentalhub.category %}
           {% elsif metafield_type_2 == 'subcategory' %}
             {% assign metafield_value_2 = product.metafields.rentalhub.subcategory %}
+          {% elsif metafield_type_2 == 'brand' %}
+            {% assign metafield_value_2 = product.metafields.rentalhub.brand | default: product.vendor %}
           {% endif %}
           
           {% assign metafield_match_2 = false %}
@@ -292,8 +286,8 @@
           {% endif %}
           
           {% if metafield_match_2 %}
-            <div class="rental-metafield-message">
-              <p style="color:{{ settings.rental_metafield_message_color }};{% if section.settings.capitalize_pricing_text %}text-transform: uppercase;{% endif %}">{{ settings.rental_metafield_message_2 }}</p>
+            <div class="rental-metafield-message" style="background-color: {{ settings.rental_metafield_message_color }};">
+              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_2 }}</p>
             </div>
             {% assign metafield_message_displayed = true %}
           {% endif %}
@@ -310,6 +304,8 @@
             {% assign metafield_value_3 = product.metafields.rentalhub.category %}
           {% elsif metafield_type_3 == 'subcategory' %}
             {% assign metafield_value_3 = product.metafields.rentalhub.subcategory %}
+          {% elsif metafield_type_3 == 'brand' %}
+            {% assign metafield_value_3 = product.metafields.rentalhub.brand | default: product.vendor %}
           {% endif %}
           
           {% assign metafield_match_3 = false %}
@@ -324,8 +320,8 @@
           {% endif %}
           
           {% if metafield_match_3 %}
-            <div class="rental-metafield-message">
-              <p style="color:{{ settings.rental_metafield_message_color }};{% if section.settings.capitalize_pricing_text %}text-transform: uppercase;{% endif %}">{{ settings.rental_metafield_message_3 }}</p>
+            <div class="rental-metafield-message" style="background-color: {{ settings.rental_metafield_message_color }};">
+              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_3 }}</p>
             </div>
             {% assign metafield_message_displayed = true %}
           {% endif %}
@@ -342,6 +338,8 @@
             {% assign metafield_value_4 = product.metafields.rentalhub.category %}
           {% elsif metafield_type_4 == 'subcategory' %}
             {% assign metafield_value_4 = product.metafields.rentalhub.subcategory %}
+          {% elsif metafield_type_4 == 'brand' %}
+            {% assign metafield_value_4 = product.metafields.rentalhub.brand | default: product.vendor %}
           {% endif %}
           
           {% assign metafield_match_4 = false %}
@@ -356,8 +354,8 @@
           {% endif %}
           
           {% if metafield_match_4 %}
-            <div class="rental-metafield-message">
-              <p style="color:{{ settings.rental_metafield_message_color }};{% if section.settings.capitalize_pricing_text %}text-transform: uppercase;{% endif %}">{{ settings.rental_metafield_message_4 }}</p>
+            <div class="rental-metafield-message" style="background-color: {{ settings.rental_metafield_message_color }};">
+              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_4 }}</p>
             </div>
             {% assign metafield_message_displayed = true %}
           {% endif %}
@@ -374,6 +372,8 @@
             {% assign metafield_value_5 = product.metafields.rentalhub.category %}
           {% elsif metafield_type_5 == 'subcategory' %}
             {% assign metafield_value_5 = product.metafields.rentalhub.subcategory %}
+          {% elsif metafield_type_5 == 'brand' %}
+            {% assign metafield_value_5 = product.metafields.rentalhub.brand | default: product.vendor %}
           {% endif %}
           
           {% assign metafield_match_5 = false %}
@@ -388,8 +388,8 @@
           {% endif %}
           
           {% if metafield_match_5 %}
-            <div class="rental-metafield-message">
-              <p style="color:{{ settings.rental_metafield_message_color }};{% if section.settings.capitalize_pricing_text %}text-transform: uppercase;{% endif %}">{{ settings.rental_metafield_message_5 }}</p>
+            <div class="rental-metafield-message" style="background-color: {{ settings.rental_metafield_message_color }};">
+              <p {% if section.settings.capitalize_pricing_text %}style="text-transform: uppercase;"{% endif %}>{{ settings.rental_metafield_message_5 }}</p>
             </div>
             {% assign metafield_message_displayed = true %}
           {% endif %}
