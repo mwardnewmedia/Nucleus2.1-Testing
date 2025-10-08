@@ -700,7 +700,6 @@ Modify at your own peril, a broken website is the likely result.
             <span class="icon icon-cart"></span>
             <span id="addToCartText-{{ section.id }}">{{ 'products.product.add_to_cart' | t }}</span>
           </button>
-      {% endunless %}
 
           {% if section.settings.enable_payment_button %}
             <div class="grid">
@@ -709,8 +708,156 @@ Modify at your own peril, a broken website is the likely result.
               </div>
             </div>
           {% endif %}
+        </div><!-- End payment-buttons -->
+      {% endunless %}
 
       {% endform %}
+      
+      <!-- Gift Card Button and Form -->
+      {% if section.settings.enable_gift_button and product.tags contains 'gift card' %}
+        <div class="gift-card-section" style="margin-top: 20px;">
+          <button type="button" id="giftCardToggle-{{ section.id }}" class="btn btn--secondary" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fas fa-gift" style="color: white;"></i>
+            <span>Send this As a Gift</span>
+          </button>
+          
+          <div id="giftCardForm-{{ section.id }}" class="gift-card-form" style="display: none; margin-top: 20px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 4px; background: #f9f9f9;">
+            <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 18px;">Gift Card Information</h3>
+            
+            <div style="margin-bottom: 15px;">
+              <label for="giftRecipientEmail-{{ section.id }}" style="display: block; margin-bottom: 5px; font-weight: 600;">
+                Recipient Email <span style="color: red;">*</span>
+              </label>
+              <input 
+                type="email" 
+                id="giftRecipientEmail-{{ section.id }}" 
+                name="properties[Gift Recipient Email]" 
+                required 
+                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box;"
+                placeholder="recipient@email.com"
+              >
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label for="giftRecipientName-{{ section.id }}" style="display: block; margin-bottom: 5px; font-weight: 600;">
+                Recipient Name
+              </label>
+              <input 
+                type="text" 
+                id="giftRecipientName-{{ section.id }}" 
+                name="properties[Gift Recipient Name]" 
+                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box;"
+                placeholder="Recipient's name"
+              >
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label for="giftMessage-{{ section.id }}" style="display: block; margin-bottom: 5px; font-weight: 600;">
+                Gift Message
+              </label>
+              <textarea 
+                id="giftMessage-{{ section.id }}" 
+                name="properties[Gift Message]" 
+                rows="4" 
+                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box; resize: vertical;"
+                placeholder="Your personal message..."
+              ></textarea>
+            </div>
+            
+            <input type="hidden" id="isGift-{{ section.id }}" name="properties[Is Gift]" value="Yes">
+            
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">
+              * Required field. The gift card information will be included with your order.
+            </p>
+          </div><!-- End gift-card-form -->
+        </div><!-- End gift-card-section -->
+        
+        <script>
+          (function() {
+            var toggleBtn = document.getElementById('giftCardToggle-{{ section.id }}');
+            var giftForm = document.getElementById('giftCardForm-{{ section.id }}');
+            var addToCartForm = document.getElementById('addToCartForm-{{ section.id }}');
+            
+            // Toggle gift form visibility
+            toggleBtn.addEventListener('click', function() {
+              if (giftForm.style.display === 'none') {
+                giftForm.style.display = 'block';
+                toggleBtn.textContent = 'Hide Gift Options';
+                var icon = document.createElement('i');
+                icon.className = 'fas fa-gift';
+                icon.style.color = 'white';
+                toggleBtn.insertBefore(icon, toggleBtn.firstChild);
+              } else {
+                giftForm.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fas fa-gift" style="color: white;"></i><span>Send this As a Gift</span>';
+              }
+            });
+            
+            // Move gift form fields into the product form when it's submitted
+            if (addToCartForm) {
+              addToCartForm.addEventListener('submit', function(e) {
+                if (giftForm.style.display === 'block') {
+                  var recipientEmail = document.getElementById('giftRecipientEmail-{{ section.id }}');
+                  
+                  // Check if email is required and filled
+                  if (!recipientEmail.value || recipientEmail.value.trim() === '') {
+                    e.preventDefault();
+                    alert('Please enter the recipient\'s email address.');
+                    recipientEmail.focus();
+                    return false;
+                  }
+                  
+                  // Validate email format
+                  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                  if (!emailPattern.test(recipientEmail.value)) {
+                    e.preventDefault();
+                    alert('Please enter a valid email address.');
+                    recipientEmail.focus();
+                    return false;
+                  }
+                  
+                  // Move all gift fields into the form
+                  var giftFields = giftForm.querySelectorAll('input[name^="properties"], textarea[name^="properties"]');
+                  giftFields.forEach(function(field) {
+                    var clone = field.cloneNode(true);
+                    addToCartForm.appendChild(clone);
+                  });
+                } else {
+                  // Remove any gift properties if form is hidden
+                  var existingGiftFields = addToCartForm.querySelectorAll('input[name^="properties[Gift"], input[name^="properties[Is Gift"], textarea[name^="properties[Gift"]');
+                  existingGiftFields.forEach(function(field) {
+                    field.remove();
+                  });
+                }
+              });
+            }
+          })();
+        </script>
+        
+        <style>
+          .gift-card-section .btn--secondary {
+            background-color: #5c6ac4;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+          }
+          
+          .gift-card-section .btn--secondary:hover {
+            background-color: #4959bd;
+          }
+          
+          .gift-card-form input:focus,
+          .gift-card-form textarea:focus {
+            outline: none;
+            border-color: #5c6ac4;
+            box-shadow: 0 0 0 2px rgba(92, 106, 196, 0.2);
+          }
+        </style>
+      {% endif %}
+      <!-- End Gift Card Section -->
       
       <!--- Metaform store selector and fulfillment methods --->
       
@@ -1450,6 +1597,13 @@ $(document).ready(function () {
         "default": "Type Message"
     },
 
+    {
+      "type": "checkbox",
+      "id": "enable_gift_button",
+      "label": "Enable gift button",
+      "info": "Allows buyers to send gift cards along with a personal message.",
+      "default": false
+    },
     {
       "type": "select",
       "id": "add_to_cart_button_size",

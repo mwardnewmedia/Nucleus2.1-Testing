@@ -300,12 +300,16 @@
                         {% if settings.display_logged_in_customer_pricing %}
                           {% if customer %}
                             {% unless settings.rental_rates or settings.hide_price %}
-                              {{ variant.price | money_with_currency }} - 
+                              {% if variant.price > 0 %}
+                                {{ variant.price | money_with_currency }} - 
+                              {% endif %}
                             {% endunless %}
                           {% endif %}
                         {% else %}
                           {% unless settings.rental_rates or settings.hide_price %}
-                            {{ variant.price | money_with_currency }} - 
+                            {% if variant.price > 0 %}
+                              {{ variant.price | money_with_currency }} - 
+                            {% endif %}
                           {% endunless %}
                         {% endif %}
                           {{ variant.title }}
@@ -373,7 +377,9 @@
       {% for variant in product.variants %}
         <div class="option">
           {% unless settings.rental_rates or settings.hide_price %}
-            {{ variant.price | money_with_currency }} - 
+            {% if variant.price > 0 %}
+              {{ variant.price | money_with_currency }} - 
+            {% endif %}
           {% endunless %}
           {{ variant.title }}
           {% if settings.rental_rate_disclaimer %}
