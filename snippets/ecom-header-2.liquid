@@ -239,23 +239,41 @@
         <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2" async></script>
       {% endif %}   
 
-      <div class="flex-item" style="display: flex; flex-direction: column; vertical-align: middle;" id="ecom2-account-cart">      
+      <div class="flex-item" style="display: flex; {% if settings.nmr_local %}flex-direction: column;{% else %}margin-left: 30px;{% endif %} vertical-align: middle;" id="ecom2-account-cart">      
 		{% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
-              <div style="display: flex; align-items: center; margin-bottom: 5px;">
-                <i style="font-size: 24px; margin-right: 8px;" class="fa-solid fa-circle-user"></i>
+              {% if settings.nmr_local %}
+                <!-- Stacked format when location selector is active -->
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                  <i style="font-size: 24px; margin-right: 8px;" class="fa-solid fa-circle-user"></i>
+                  {% if shop.customer_accounts_enabled %}
+                    <span class="ecom2-site-header--text-links medium-down--hide">
+                    {% if customer %}
+                      <a style="display: block;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a> 
+                    {% else %}
+                      <div style="display: flex; flex-direction: column; gap: 2px; text-align: left;">
+                        <div>{{ 'layout.customer.sign_in' | t | customer_login_link }} /</div>
+                        <div>{{ 'layout.customer.create_account' | t | customer_register_link }}</div>
+                      </div>
+                    {% endif %}    
+                    </span>
+                  {% endif %}
+                </div>
+              {% else %}
+                <!-- Original inline format when location selector is not active -->
+                <i style="font-size: 24px;" class="fa-solid fa-circle-user"></i>
                 {% if shop.customer_accounts_enabled %}
                   <span class="ecom2-site-header--text-links medium-down--hide">
                   {% if customer %}
-                    <a style="display: block;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a> 
-                  {% else %}
-                    <div style="display: flex; flex-direction: column; gap: 2px; text-align: left;">
-                      <div>{{ 'layout.customer.sign_in' | t | customer_login_link }} /</div>
-                      <div>{{ 'layout.customer.create_account' | t | customer_register_link }}</div>
-                    </div>
+                    {% capture first_name %}{% endcapture %}
+                      <a style="display:block;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a> 
+                    {% else %}
+                      {{ 'layout.customer.sign_in' | t | customer_login_link }}
+                      <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
+                      <span style="margin-right: 30px;">{{ 'layout.customer.create_account' | t | customer_register_link }}</span>
                   {% endif %}    
                   </span>
                 {% endif %}
-              </div>
+              {% endif %}
             {% endunless %}
             
         </div>
