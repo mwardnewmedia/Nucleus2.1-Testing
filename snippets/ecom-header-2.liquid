@@ -33,13 +33,13 @@
   {% if section.settings.show_contact_bar %}
       <div class="contact-bar medium-down--hide">
           <div class="contact_info">
+          {% unless settings.nmr_local %}
            {% if section.settings.multi_locations %}
             <ul>
               <li><a href="/a/pages/locations"  style="color:{{ section.settings.announcement_text_color }}"><i class="fa-solid fa-location-dot"></i>&nbsp;Contact Us</a></li>
             </ul>
             {% else %}
             <ul>
-            {% unless settings.nmr_local %}
               {% if section.settings.show_phone %}
               <li><a style="color:{{ section.settings.announcement_text_color }};" href="tel:{{ section.settings.header_phone | escape }}"><span class="fa-solid fa-phone"></span>&nbsp;{{ section.settings.header_phone }}</a></li>
               {% else %}{% endif %}
@@ -49,9 +49,9 @@
               {% if section.settings.show_locations %}
               <li><a style="color:{{ section.settings.announcement_text_color }};" href="{{ section.settings.header_locations | escape }}"><span class="fa-solid fa-location-dot"></span>&nbsp;{{ section.settings.header_locations_title }}</a></li>
               {% else %}{% endif %}
-            {% endunless %}
             </ul>
             {% endif %} 
+          {% endunless %}
             {% comment %}
             SOCIAL MEDIA ICONS
             {% endcomment %}
