@@ -317,7 +317,7 @@ Modify at your own peril, a broken website is the likely result.
     {% elsif section.settings.logo_alignment == "logo_center" %}
     
     <div class="logo-center">
-      <div class="logo-center-wrap" style="display: flex; align-items: center; justify-content: center; position: relative;">
+      <div class="logo-center-wrap">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo text-center" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -377,13 +377,6 @@ Modify at your own peril, a broken website is the likely result.
         {% if request.page_type == 'index' %}
           </h1>
         {% else %}
-          </div>
-        {% endif %}
-        
-        {%if settings.nmr_local %}
-          <div style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); max-width: 200px;" class="medium-down--hide">
-            <div id="mighty-location-selector"></div>
-            <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
           </div>
         {% endif %}
       </div>
