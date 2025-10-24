@@ -394,34 +394,59 @@ Modify at your own peril, a broken website is the likely result.
           {% endif %}
         </div>
         
-        <!-- Right Column: Site Header Text Links -->
+        <!-- Right Column: Site Header Text Links (only when nmr_local is true) -->
         <div class="logo-center-right" style="flex: 0 0 auto; min-width: 200px; display: flex; justify-content: flex-end; align-items: center;">
-          <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
-            <span style="display: flex; align-items: center;">
-              {% unless section.settings.hide_customer_login %}
-                <i style="font-size: 24px;" class="fa-solid fa-circle-user"></i>
-              {% if shop.customer_accounts_enabled %}
-                <span class="site-header--meta-links medium-down--hide">
-              {% if customer %}
-                {% capture first_name %}<a href="{{ routes.account_url }}">{{ customer.first_name }}</a>{% endcapture %}
-                {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }} &middot; {{ 'layout.customer.log_out' | t | customer_logout_link }}
-              {% else %}
-                {{ 'layout.customer.sign_in' | t | customer_login_link }}
-                <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
-                <span style="margin-right: 30px;">
-                {{ 'layout.customer.create_account' | t | customer_register_link }}
+          {%if settings.nmr_local %}
+            <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
+              <span style="display: flex; align-items: center;">
+                {% unless section.settings.hide_customer_login %}
+                  <i style="font-size: 24px;" class="fa-solid fa-circle-user"></i>
+                {% if shop.customer_accounts_enabled %}
+                  <span class="site-header--meta-links medium-down--hide">
+                {% if customer %}
+                  {% capture first_name %}<a href="{{ routes.account_url }}">{{ customer.first_name }}</a>{% endcapture %}
+                  {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }} &middot; {{ 'layout.customer.log_out' | t | customer_logout_link }}
+                {% else %}
+                  {{ 'layout.customer.sign_in' | t | customer_login_link }}
+                  <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
+                  <span style="margin-right: 30px;">
+                  {{ 'layout.customer.create_account' | t | customer_register_link }}
+                  </span>
+                {% endif %}    
                 </span>
-              {% endif %}    
-              </span>
-              {% endif %}
-            {% endunless %}
-          </span>
-        </div>
+                {% endif %}
+              {% endunless %}
+            </span>
+          </div>
+          {% endif %}
         </div>
         
       </div>
 
         <div class="text-center search-center">
+          {% unless settings.nmr_local %}
+            <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
+              <span style="display: flex; align-items: center;">
+                {% unless section.settings.hide_customer_login %}
+                  <i style="font-size: 24px;" class="fa-solid fa-circle-user"></i>
+                {% if shop.customer_accounts_enabled %}
+                  <span class="site-header--meta-links medium-down--hide">
+                {% if customer %}
+                  {% capture first_name %}<a href="{{ routes.account_url }}">{{ customer.first_name }}</a>{% endcapture %}
+                  {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }} &middot; {{ 'layout.customer.log_out' | t | customer_logout_link }}
+                {% else %}
+                  {{ 'layout.customer.sign_in' | t | customer_login_link }}
+                  <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
+                  <span style="margin-right: 30px;">
+                  {{ 'layout.customer.create_account' | t | customer_register_link }}
+                  </span>
+                {% endif %}    
+                </span>
+                {% endif %}
+              {% endunless %}
+            </span>
+          </div>
+          {% endunless %}
           <br class="medium-down--hide">
 
         {% unless section.settings.hide_search_bar %}
