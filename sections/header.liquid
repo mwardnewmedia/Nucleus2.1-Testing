@@ -306,12 +306,12 @@ Modify at your own peril, a broken website is the likely result.
           {% include 'search-bar' %}
 		{% endunless %}
       </div>
-      <div class="grid-item medium-down--hide large--one-quarter text-center large--text-right">
-        {%if settings.nmr_local %}
-          <div id="mighty-location-selector"></div>
-          <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
-        {% endif %}
-      </div>
+      {%if settings.nmr_local %}
+        <div class="grid-item medium-down--hide large--one-quarter text-center large--text-right">
+            <div id="mighty-location-selector"></div>
+            <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
+        </div>
+      {% endif %}
     </div>
     
     {% elsif section.settings.logo_alignment == "logo_center" %}
