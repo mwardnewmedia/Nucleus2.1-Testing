@@ -317,68 +317,88 @@ Modify at your own peril, a broken website is the likely result.
     {% elsif section.settings.logo_alignment == "logo_center" %}
     
     <div class="logo-center">
-      <div class="logo-center-wrap">
-        {% if request.page_type == 'index' %}
-          <h1 class="header-logo text-center" itemscope itemtype="http://schema.org/Organization">
-        {% else %}
-          <div class="h1 header-logo text-center" itemscope itemtype="http://schema.org/Organization">
-        {% endif %}
-          {% if section.settings.logo %}
-          {% capture image_size %}{{ section.settings.logo_max_height | escape }}x{% endcapture %}
-          {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-          {% capture logo_alt %}{{ section.settings.logo.alt | default: shop.name }}{% endcapture %}
-          <a href="{{ routes.root_url }}" itemprop="url">
-            <div class="lazyload__image-wrapper no-js header-logo__image" style="max-height:{{ section.settings.logo_max_height }}px;">
-                <img class="lazyload js"
-                  data-src="{{ img_url }}"
-                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-                  data-aspectratio="{{ section.settings.logo.aspect_ratio }}"
-                  data-sizes="auto"
-                  alt="{{ logo_alt | escape }}"
-                  style="height:{{ section.settings.logo_max_height }}px;">
+      <div class="logo-center-wrap" style="display: flex; align-items: center; justify-content: space-between;">
+        
+        <!-- Left Column: Store Locator -->
+        <div class="logo-center-left" style="flex: 0 0 auto; min-width: 200px;">
+          {%if settings.nmr_local %}
+            <div class="medium-down--hide">
+              <div id="mighty-location-selector"></div>
+              <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
             </div>
-            <noscript>
-              {% capture image_size %}{{ section.settings.logo_max_height | escape }}x{% endcapture %}
-              <img src="{{ section.settings.logo | img_url: image_size }}"
-                srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
-                alt="{{ logo_alt | escape }}"
-                itemprop="logo"
-                style="max-height:{{ section.settings.logo_max_height }}px;">
-            </noscript>
-          </a>
-          <!--- Sponsor Logo --->
-          {% if section.settings.sponsor_logo %}
-          {% capture image_size %}{{ section.settings.sponsor_logo_max_height | escape }}x{% endcapture %}
-          {%- assign img_url = section.settings.sponsor_logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
-          {% capture sponsor_logo_alt %}{{ section.settings.sponsor_logo.alt | default: shop.name }}{% endcapture %}
-          <a href="{{ section.settings.sponsor_link }}" itemprop="url" style="margin-left:10px;" class="medium-down--hide">
-            <div class="lazyload__image-wrapper no-js header-logo__image" style="max-height:{{ section.settings.sponsor_logo_max_height }}px;">
-                <img class="lazyload js"
-                  data-src="{{ img_url }}"
-                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
-                  data-aspectratio="{{ section.settings.sponsor_logo.aspect_ratio }}"
-                  data-sizes="auto"
-                  alt="{{ sponsor_logo_alt | escape }}"
-                  style="height:{{ section.settings.sponsor_logo_max_height }}px;">
-            </div>
-            <noscript>
-              {% capture image_size %}{{ section.settings.sponsor_logo_max_height | escape }}x{% endcapture %}
-              <img src="{{ section.settings.sponsor_logo | img_url: image_size }}"
-                srcset="{{ section.settings.sponsor_logo | img_url: image_size }} 1x, {{ section.settings.sponsor_logo | img_url: image_size, scale: 2 }} 2x"
-                alt="{{ sponsor_logo_alt | escape }}"
-                itemprop="logo"
-                style="max-height:{{ section.settingssponsor_logo_max_height }}px;">
-            </noscript>
-          </a>
-          {% endif %}  
-          {% else %}
-            <a href="{{ routes.root_url }}" itemprop="url">{{ shop.name }}</a>
           {% endif %}
-        {% if request.page_type == 'index' %}
-          </h1>
-        {% else %}
-          </div>
-        {% endif %}
+        </div>
+        
+        <!-- Center Column: Logo -->
+        <div class="logo-center-middle" style="flex: 1; display: flex; justify-content: center;">
+          {% if request.page_type == 'index' %}
+            <h1 class="header-logo text-center" itemscope itemtype="http://schema.org/Organization">
+          {% else %}
+            <div class="h1 header-logo text-center" itemscope itemtype="http://schema.org/Organization">
+          {% endif %}
+            {% if section.settings.logo %}
+            {% capture image_size %}{{ section.settings.logo_max_height | escape }}x{% endcapture %}
+            {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            {% capture logo_alt %}{{ section.settings.logo.alt | default: shop.name }}{% endcapture %}
+            <a href="{{ routes.root_url }}" itemprop="url">
+              <div class="lazyload__image-wrapper no-js header-logo__image" style="max-height:{{ section.settings.logo_max_height }}px;">
+                  <img class="lazyload js"
+                    data-src="{{ img_url }}"
+                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                    data-aspectratio="{{ section.settings.logo.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ logo_alt | escape }}"
+                    style="height:{{ section.settings.logo_max_height }}px;">
+              </div>
+              <noscript>
+                {% capture image_size %}{{ section.settings.logo_max_height | escape }}x{% endcapture %}
+                <img src="{{ section.settings.logo | img_url: image_size }}"
+                  srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                  alt="{{ logo_alt | escape }}"
+                  itemprop="logo"
+                  style="max-height:{{ section.settings.logo_max_height }}px;">
+              </noscript>
+            </a>
+            <!--- Sponsor Logo --->
+            {% if section.settings.sponsor_logo %}
+            {% capture image_size %}{{ section.settings.sponsor_logo_max_height | escape }}x{% endcapture %}
+            {%- assign img_url = section.settings.sponsor_logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            {% capture sponsor_logo_alt %}{{ section.settings.sponsor_logo.alt | default: shop.name }}{% endcapture %}
+            <a href="{{ section.settings.sponsor_link }}" itemprop="url" style="margin-left:10px;" class="medium-down--hide">
+              <div class="lazyload__image-wrapper no-js header-logo__image" style="max-height:{{ section.settings.sponsor_logo_max_height }}px;">
+                  <img class="lazyload js"
+                    data-src="{{ img_url }}"
+                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                    data-aspectratio="{{ section.settings.sponsor_logo.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ sponsor_logo_alt | escape }}"
+                    style="height:{{ section.settings.sponsor_logo_max_height }}px;">
+              </div>
+              <noscript>
+                {% capture image_size %}{{ section.settings.sponsor_logo_max_height | escape }}x{% endcapture %}
+                <img src="{{ section.settings.sponsor_logo | img_url: image_size }}"
+                  srcset="{{ section.settings.sponsor_logo | img_url: image_size }} 1x, {{ section.settings.sponsor_logo | img_url: image_size, scale: 2 }} 2x"
+                  alt="{{ sponsor_logo_alt | escape }}"
+                  itemprop="logo"
+                  style="max-height:{{ section.settingssponsor_logo_max_height }}px;">
+              </noscript>
+            </a>
+            {% endif %}  
+            {% else %}
+              <a href="{{ routes.root_url }}" itemprop="url">{{ shop.name }}</a>
+            {% endif %}
+          {% if request.page_type == 'index' %}
+            </h1>
+          {% else %}
+            </div>
+          {% endif %}
+        </div>
+        
+        <!-- Right Column: Empty (for balance) -->
+        <div class="logo-center-right" style="flex: 0 0 auto; min-width: 200px;">
+          <!-- Empty column for visual balance -->
+        </div>
+        
       </div>
 
         <div class="text-center search-center">
@@ -416,13 +436,6 @@ Modify at your own peril, a broken website is the likely result.
           {{ 'layout.cart.cart' | t }} <span class="cart-count cart-badge--desktop {% if cart.item_count == 0 %}hidden-count{% endif %}">{{ cart.item_count }}</span>
         </a>
         {% endunless %}
-
-        {%if settings.nmr_local %}
-          <div class="text-center large--hide" style="margin-top: 10px;">
-            <div id="mighty-location-selector-mobile"></div>
-            <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
-          </div>
-        {% endif %}
       </div>
     </div>
     
