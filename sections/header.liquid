@@ -394,14 +394,8 @@ Modify at your own peril, a broken website is the likely result.
           {% endif %}
         </div>
         
-        <!-- Right Column: Empty (for balance) -->
-        <div class="logo-center-right" style="flex: 0 0 auto; min-width: 200px;">
-          <!-- Empty column for visual balance -->
-        </div>
-        
-      </div>
-
-        <div class="text-center search-center">
+        <!-- Right Column: Site Header Text Links -->
+        <div class="logo-center-right" style="flex: 0 0 auto; min-width: 200px; display: flex; justify-content: flex-end; align-items: center;">
           <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
             <span style="display: flex; align-items: center;">
               {% unless section.settings.hide_customer_login %}
@@ -423,8 +417,12 @@ Modify at your own peril, a broken website is the likely result.
             {% endunless %}
           </span>
         </div>
+        </div>
+        
+      </div>
 
-        <br class="medium-down--hide">
+        <div class="text-center search-center">
+          <br class="medium-down--hide">
 
         {% unless section.settings.hide_search_bar %}
         {% include 'search-bar' %}
