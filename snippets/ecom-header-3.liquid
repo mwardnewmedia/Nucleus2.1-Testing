@@ -159,9 +159,9 @@
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" id="ecom3-site-header">
   <div class="ecom-header-3-wrapper">
 
-    <div class="flex">
+    <div class="flex" style="justify-content: space-between; align-items: center;">
       
-      <div class="flex-logo flex-item" style="margin-right:60px;">
+      <div class="flex-logo flex-item">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -234,7 +234,7 @@
         </div>
       {% endunless %}
             
-      <div class="flex-item" style="margin-left:5px;" id="ecom3-account-cart">      
+      <div class="flex-item" id="ecom3-account-cart" style="display: flex; align-items: center; gap: 15px;">      
 		{% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
           {% if settings.new_shopify_accounts_url != blank %}
             <span class="site-header--meta-links medium-down--hide" style="display:flex;align-items:center;">
@@ -256,7 +256,6 @@
           {% endif %}
          {% endif %}
         {% endunless %}
-      </div> 
 
 		    {% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
           <a href="{{ routes.cart_url }}" class="header-cart-btn ecom3-cart cart-toggle" id="ecom-header-cart" aria-label="shopping cart">
@@ -266,9 +265,10 @@
         {% endunless %}
 
         {%if settings.nmr_local %}
-          <div id="mighty-location-selector" style="display: inline-block; vertical-align: middle; margin-left: 15px;"></div>
+          <div id="mighty-location-selector" style="display: inline-block; vertical-align: middle;"></div>
           <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
         {% endif %}
+      </div> 
      </div>
   </div>
 </header>
