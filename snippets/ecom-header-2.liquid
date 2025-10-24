@@ -231,25 +231,25 @@
       </div>
       {% endunless %}
 
-      <div class="flex-item" style="display: flex; margin-left: 30px; vertical-align: middle;" id="ecom2-account-cart">      
+      <div class="flex-item" style="display: flex; justify-content: space-between; align-items: center; margin-left: 30px; width: 100%; max-width: 400px;" id="ecom2-account-cart">      
 		{% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
-              <i style="font-size: 24px;" class="fa-solid fa-circle-user"></i>
-              {% if shop.customer_accounts_enabled %}
-                <span class="ecom2-site-header--text-links medium-down--hide">
-                {% if customer %}
-                  {% capture first_name %}{% endcapture %}
-                    <a style="display:block;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a> 
-                  {% else %}
-                    {{ 'layout.customer.sign_in' | t | customer_login_link }}
-                    <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
-                    <span style="margin-right: 30px;">{{ 'layout.customer.create_account' | t | customer_register_link }}</span>
-                {% endif %}    
-                </span>
-              {% endif %}
+              <div style="display: flex; align-items: center;">
+                <i style="font-size: 24px; margin-right: 8px;" class="fa-solid fa-circle-user"></i>
+                {% if shop.customer_accounts_enabled %}
+                  <span class="ecom2-site-header--text-links medium-down--hide">
+                  {% if customer %}
+                    {% capture first_name %}{% endcapture %}
+                      <a style="display:block;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a> 
+                    {% else %}
+                      {{ 'layout.customer.sign_in' | t | customer_login_link }}
+                      <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
+                      <span>{{ 'layout.customer.create_account' | t | customer_register_link }}</span>
+                  {% endif %}    
+                  </span>
+                {% endif %}
+              </div>
             {% endunless %}
             
-        </div>
-
 		    {% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
           <a href="{{ routes.cart_url }}" class="header-cart-btn ecom2-cart cart-toggle" id="ecom-header-cart" aria-label="shopping cart">
             <span class="icon icon-cart"></span>
