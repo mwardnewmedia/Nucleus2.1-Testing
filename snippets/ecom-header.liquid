@@ -30,6 +30,7 @@
 <div class="contact-bar medium-down--hide">
     <div class="wrapper">
     <div class="contact_info">
+    {% unless settings.nmr_local %}
      {% if section.settings.multi_locations %}
       <ul>
         <li><a href="/a/pages/locations"><span class="fa-solid fa-location-pin"></span>&nbsp;Contact Us</a></li>
@@ -49,6 +50,7 @@
               </ul>
           {% endif %}
       {% endif %}
+      {% endunless %}
       {% comment %}
       SOCIAL MEDIA ICONS
       {% endcomment %}
