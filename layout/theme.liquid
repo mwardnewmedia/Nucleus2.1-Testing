@@ -245,7 +245,7 @@ Modify at your own peril, a broken website is the likely result.
 
     {% section 'header' %}
 
-    {% unless page.template_suffix contains 'dalp' %}
+    {% unless page.template_suffix contains 'dalp' or settings.nmr_local %}
       {% include 'metastock-location-chooser' %}
     {% endunless %}
   
