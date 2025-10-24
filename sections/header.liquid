@@ -208,7 +208,7 @@ Modify at your own peril, a broken website is the likely result.
     {% if section.settings.logo_alignment == "logo_left"  %}
 
     <div class="grid--full">
-      <div class="grid-item large--one-third">
+      <div class="grid-item large--one-half">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -272,7 +272,7 @@ Modify at your own peril, a broken website is the likely result.
         {% endif %}
       </div>
 
-      <div class="grid-item medium-down--hide large--one-quarter text-center large--text-right">
+      <div class="grid-item medium-down--hide large--one-fourth text-center large--text-right">
         <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
           <span style="display: flex; align-items: center;">
             {% unless section.settings.hide_customer_login %}
