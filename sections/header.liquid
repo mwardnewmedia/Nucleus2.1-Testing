@@ -81,14 +81,13 @@ Modify at your own peril, a broken website is the likely result.
 {% if section.settings.show_contact_bar %}
 <div class="contact-bar">
     <div class="wrapper">
+    {% unless settings.nmr_local %}
     <div class="contact_info medium-down--hide">
       {% if section.settings.multi_locations %}
       <ul>
         <li><a href="{{ section.settings.multi_location_link | escape }}"><i class="fa-regular fa-location-dot"></i>&nbsp;Contact Us</a></li>
       </ul>
-        
       {% else %}
-        
       <ul>
         {% if section.settings.show_phone %}
         <li><a href="tel:{{ section.settings.header_phone | escape }}"><span class="fa-solid fa-phone"></span>&nbsp;{{ section.settings.header_phone }}</a></li>
@@ -99,10 +98,9 @@ Modify at your own peril, a broken website is the likely result.
         {% if section.settings.show_locations %}
         <li><a href="{{ section.settings.header_locations | escape }}"><span class="fa-solid fa-location-dot"></span>&nbsp;{{ section.settings.header_locations_title }}</a></li>
         {% else %}{% endif %}
-
       </ul>
-
       {% endif %}
+    {% endunless %}
       {% comment %}
       SOCIAL MEDIA ICONS
       {% endcomment %}
