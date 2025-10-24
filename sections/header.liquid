@@ -81,8 +81,8 @@ Modify at your own peril, a broken website is the likely result.
 {% if section.settings.show_contact_bar %}
 <div class="contact-bar">
     <div class="wrapper">
-    {% unless settings.nmr_local %}
     <div class="contact_info medium-down--hide">
+    {% unless settings.nmr_local %}
       {% if section.settings.multi_locations %}
       <ul>
         <li><a href="{{ section.settings.multi_location_link | escape }}"><i class="fa-regular fa-location-dot"></i>&nbsp;Contact Us</a></li>
