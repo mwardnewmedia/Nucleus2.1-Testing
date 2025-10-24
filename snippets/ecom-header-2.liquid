@@ -242,8 +242,6 @@
                       <a style="display:block;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a> 
                     {% else %}
                       {{ 'layout.customer.sign_in' | t | customer_login_link }}
-                      <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
-                      <span>{{ 'layout.customer.create_account' | t | customer_register_link }}</span>
                   {% endif %}    
                   </span>
                 {% endif %}
