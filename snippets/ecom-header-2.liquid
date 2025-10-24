@@ -255,7 +255,7 @@
                 <div style="display: flex; align-items: center; white-space: nowrap;">
                   <i style="font-size: 24px; margin-right: 8px;" class="fa-solid fa-circle-user"></i>
                   {% if shop.customer_accounts_enabled %}
-                    <span class="ecom2-site-header--text-links medium-down--hide" style="white-space: nowrap; margin-left: 0px;">
+                    <span class="ecom2-site-header--text-links medium-down--hide" style="white-space: nowrap;">
                     {% if customer %}
                       {% capture first_name %}{% endcapture %}
                         <a style="display:inline-block; white-space: nowrap;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a> 
