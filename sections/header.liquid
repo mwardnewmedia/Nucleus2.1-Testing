@@ -272,7 +272,7 @@ Modify at your own peril, a broken website is the likely result.
         {% endif %}
       </div>
 
-      <div class="grid-item medium-down--hide large--one-fourth text-center large--text-right">
+      <div class="grid-item medium-down--hide {% if settings.nmr_local %}large--one-fourth{% else %}large--one-half{% endif %} text-center large--text-right">
         <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
           <span style="display: flex; align-items: center;">
             {% unless section.settings.hide_customer_login %}
