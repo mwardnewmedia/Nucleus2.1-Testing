@@ -1,0 +1,125 @@
+{%- comment -%}
+***************************************************************
+PLEASE NOTE: Do not change this file! 
+This theme is managed by the Replica app. 
+Any manual changes may be automatically overwritten at any time.
+3rd PARTY APP DEVELOPERS BEWARE WITH INSTALLS!
+Modify at your own peril, a broken website is the likely result.
+***************************************************************
+{%- endcomment -%}
+
+<!-- Rental Dropdown/Megamenu (Rental Collections) -->
+{% comment %} Count rental collections first {% endcomment %}
+{% assign rental_collection_count = 0 %}
+{% for collection in collections %}
+  {% assign is_rental_collection = false %}
+  {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
+    {% assign is_rental_collection = true %}
+  {% endif %}
+  
+  {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
+    {% assign rental_collection_count = rental_collection_count | plus: 1 %}
+  {% endif %}
+{% endfor %}
+
+{% assign use_megamenu = false %}
+{% if rental_collection_count > 13 %}
+  {% assign use_megamenu = true %}
+{% endif %}
+
+<li
+    class="parent-nav-item site-nav--has-dropdown {% if link.active %}site-nav--active{% endif %}"
+    id="{{ link.title | handleize }}"
+    aria-haspopup="true"
+    {% if use_megamenu %}style="position:initial;"{% endif %}>
+  <a
+     href="{{ link.url }}"
+     class="site-nav--link parent-nav-link"
+     data-meganav-type="parent"
+     aria-controls="MenuRental"
+     aria-expanded="false"
+     {% unless request.page_type == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless%}>
+    {{ link.title | escape }}
+    <span class="icon icon-arrow-down" aria-hidden="true"></span>
+  </a> 
+  <ul
+    id="MenuRental"
+    class="site-nav--dropdown{% if use_megamenu %} megamenu{% endif %}"
+    data-meganav-dropdown>
+    {% if rental_collection_count > 0 %}
+      {% comment %} Show rental collections if they exist {% endcomment %}
+      {% if use_megamenu %}
+      <a href="{{ routes.collections_url }}/rentals" style="
+          font-weight: initial;
+          text-decoration: underline;
+      ">View all rentals</a>
+      <div class="megamenu-wrap">
+      {% endif %}
+        {% for collection in collections %}
+          {% assign is_rental_collection = false %}
+          {% if collection.metafields.newmediaretailer.for_app == 'rental' %}
+            {% assign is_rental_collection = true %}
+          {% endif %}
+          
+          {% if is_rental_collection and collection.title != 'Rentals' and collection.all_products_count > 0 %}
+            <li{% if collection.url == request.page_type %} class="site-nav--active"{% endif %}>
+              <a
+                href="{{ collection.url }}"
+                class="site-nav--link"
+                data-meganav-type="child" 
+                tabindex="-1">
+                  {{ collection.title | escape }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% if use_megamenu %}
+      </div>
+      {% endif %}
+    {% else %}
+      {% comment %} Backup: Show standard navigation links when no rental collections exist {% endcomment %}
+      {% for childlink in link.links %}
+        {% if childlink.links != blank %}
+          <li
+            class="site-nav--has-dropdown site-nav--has-dropdown-grandchild {% if childlink.active %}site-nav--active{% endif %}"
+            aria-haspopup="true">
+            <a
+              href="{{ childlink.url }}"
+              class="site-nav--link"
+              data-meganav-type="parent"
+              {% unless request.page_type == 'index' %}{% if childlink.active %}aria-current="page"{% endif %}{% endunless%}>
+                {{ childlink.title | escape }}
+            </a>
+            <ul
+              class="site-nav--dropdown-grandchild"
+              data-meganav-dropdown>
+              {% for grandchildlink in childlink.links %}
+                <li{% if grandchildlink.active %} class="site-nav--active"{% endif %}>
+                  <a
+                    href="{{ grandchildlink.url }}"
+                    class="site-nav--link"
+                    data-meganav-type="child"
+                    {% unless request.page_type == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}
+                    tabindex="-1">
+                      {{ grandchildlink.title | escape }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% else %}
+          <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+            <a
+              href="{{ childlink.url }}"
+              class="site-nav--link"
+              data-meganav-type="child"
+              {% if childlink.active %}aria-current="page"{% endif %}
+              tabindex="-1">
+                {{ childlink.title | escape }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </ul>
+</li>

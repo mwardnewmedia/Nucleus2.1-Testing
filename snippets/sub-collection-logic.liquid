@@ -1,0 +1,494 @@
+{% if collection.title == "Pet" %}
+  
+  {% assign categories = "Bird, Cat, Dog, Fish, Reptile, Small Animal" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+   <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+             {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Farm" %}
+  
+  {% assign categories = "Cattle, Dairy Cow, Flock, Horse, Llama & Alpaca, Pigs, Sheep & Goat, Wildlife, Batteries, Beekeeping, Farm Supplies & Hardware, Hay and Bedding" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>  
+  
+{% elsif collection.title == "Lawn & Garden" %}
+  
+  {% assign categories = "Equipment, Garden, Lawn, Snow Removal, Wild Bird" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>  
+
+{% elsif collection.title == "Live Plants" %}
+  
+  {% assign categories = "Bloom, Characteristics, Exposure, Form, Habit" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>  
+
+{% elsif collection.title == "Automotive" %}
+  
+  {% assign categories = "Auto Accessories, Basic Repair & Parts, Battery & Electrical Accessories, Cell Phone Accessories, Chemicals & Fluids, Cleaning & Waxing, Dollar Shop, Filters, Gas & Kerosene Cans, Road Safety, RV & Mobile Home Supplies, Snow & Ice Removers, Test & Service Equipment, Tie Downs & Towing, Tire & Wheel Accessories, Trailer Parts & Accessories, Automotive Tools, Tires & Wheels" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>  
+
+{% elsif collection.title == "Building Materials" %}
+  
+  {% assign categories = "Adhesives & Glues, Concrete, Construction Hardware, Doors, Driveway & Roof Coatings, Drywall Hardware & Tools, Insulation, Lumber, Moulding & Shims, Outdoor Railing, Veneer Edging & Facing, Wall & Ceiling Materials, Floor Jacks and Supports, Siding Trim Coil & Accessories, Flooring Materials, Roofing Materials, Cabinets & Vanities, Gutters & Downspouts, Roof Venting & Fans, Windows & Window Wells, Drywall" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>  
+
+{% elsif collection.title == "Clothing & Apparel" %}
+  
+  {% assign categories = "Clothing, Footwear, Gloves & Glove Accessories, Hats & Caps, Leather Care, Rain Gear, Winter Apparel, Tool Belt & Aprons, Eyewear, Safety Wear, Jewelry, Handbags Purses & Wallets" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div> 
+
+{% elsif collection.title == "Electrical" %}
+  
+  {% assign categories = "Alternative Energy, Batteries, Circuit Breakers Fuses & Load Centers, Conduit & Fittings, Doorbells, Electrical Boxes & Accessories, Extension Cords & Accessories, Home Safety - Electrical, Multi Outlets & Surge Protectors, Outlets, Plugs & Connectors, Smart Home & Security, Switches & Dimmers, Wall Plates, Interior Light Fixtures, Job Site Lighting, Ceiling Fans & Accessories, Generators & Accessories, Light Fixture Parts, Networking & Media Center Components, Light Bulbs & Accessories, Smoke Alarms & Carbon Monoxide Detectors, Electrical Wiring, Flashlights" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Food & Snacks" %}
+  
+  {% assign categories = "Beverages, Candy & Snacks, Popcorn & Popcorn Supplies, Spices & Seasonings, Vitamins" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Heating & Cooling" %}
+  
+  {% assign categories = "Air Purifiers & Filters, Ceiling Fans, Evaporative Coolers, Fans, Fireplaces & Wood Stoves, Furnace Filters, Heaters, Heating Controls, Humidifiers & Dehumidifiers, Registers & Diffusers, Thermostats, Heating System Parts, Chimney, Pellets, Propane Accessories, HVAC Ducts & Venting Supplies" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Hardware" %}
+  
+  {% assign categories = "Cabinet Hardware, Casters & Floor Protection, Chain & Wire, Door Knobs & Hardware, Drawer Hardware, Fasteners, Garage Door Openers & Hardware, Gate Hardware, Hinges, Home Safety & Security, Keys & Key Holders, Mailboxes & Signs, Metal Stock, Rope & Twine, Tape, Weatherproofing, Window Hardware, Mobile Home Hardware & Accessories, Tie Downs & Earth Anchors, RV Hardware & Accessories, Angle Bar & Rod Stock, Builder's Hardware, Furniture Parts & Accessories, Springs, Hoists & Pulleys" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+  
+{% elsif collection.title == "Home & Cleaning" %}
+  
+  {% assign categories = "Cleaning Tools & Supplies, Dishwashing & Sink Supplies, Dollar Shop, Home Decor, Household Cleaners, Indoor Pest Control, Janitorial Supplies, Kitchen, Laundry Aids & Carts, Personal Care, Trash Cans & Trash Bags, Absorbents, Kids Toys" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>  
+
+{% elsif collection.title == "Kitchen & Bath" %}
+  
+  {% assign categories = "Bath, Cabinet Hardware, Faucets, Food Storage & Kitchen Organization, Kitchen, Showers & Bathtubs, Sinks & Laundry Tubs, Small Kitchen Appliances, Large Kitchen Appliances, Toilets" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>  
+
+{% elsif collection.title == "Lighting & Ceiling Fans" %}
+  
+  {% assign categories = "Ceiling Fans, Indoor Lighting, Light Bulbs, Outdoor & Landscape Lighting, Work & Workshop Lighting" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div> 
+
+{% elsif collection.title == "Lumber" %}
+  
+  {% assign categories = "Pressure Treated Lumber, Wood Deck Boards, Composite Deck Boards, Plywood, OSB, MDF, Dimensional Lumber, Studs, Joists, Appearance Boards, Lattice, Particle Board, Hardwood Lumber, Softwood Lumber, Shims, PVC, Shiplap, Wood Fencing, Subfloor" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div> 
+
+{% elsif collection.title == "Outdoor Living & Patio" %}
+  
+  {% assign categories = "Coolers & Ice Chests, Fire Pits & Patio Heaters, Grills & Outdoor Cooking, Outdoor & Landscape Lighting, Patio & Lawn Decor, Patio Furniture, Pest Solutions, Pools & Pool Supplies, Recreation & Activities, Thermometers & Weather Stations, Boat & Marine Supplies, Rock Salt & Ice Melt" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div> 
+
+{% elsif collection.title == "Paint & Supplies" %}
+  
+  {% assign categories = "Caulk & Sealant, Craft Paint, Drop Cloths & Floor Protection, Exterior Stains & Sealers, Interior Stains & Finishes, Ladders, Paint & Primers, Paint Additives, Paint Thinners & Removers, Paint Tools & Supplies, Rubberized Coatings, Spray Paint, Tape, Wallpaper Tools & Chemicals, Sanding & Abrasives, Brushes & Applicators" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div> 
+
+{% elsif collection.title == "Plumbing" %}
+  
+  {% assign categories = "Conduit & Fittings, Drain Parts & Repair, Electrical Boxes & Accessories, Faucets, Garbage Disposals, Heating & De-Icing Cables, Pipes & Fittings, Pumps & Accessories, Septic Tank & Cesspool Chemicals, Showers & Bathtubs, Sinks, Tape, Valves, Water Filtration, Water Heaters, Water Softeners, Bathroom, Basement Water Barrier Systems, Washing Machine Accessories, Water Meter Accessories, Snakes & Drain Openers, Plumbing Accessories" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div> 
+
+{% elsif collection.title == "Seasonal & Holiday" %}
+  
+  {% assign categories = "Christmas Decor, Christmas Lighting, Christmas Trees & Accessories, Extension Cords & Accessories, Halloween Lights & Decorations, Hannukah, Party Supplies, Gift Wrapping Supplies, Gifts & Supplies" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Small Appliances & Electronics" %}
+  
+  {% assign categories = "Air Conditioners, Cell Phone Accessories, Clothing Care, Networking & Computer Accessories, Portable Electronics, Small Kitchen Appliances, Telephones & Accessories, Vacuums & Carpet Cleaners, Cameras & Film, Recording Media" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Sporting Goods" %}
+  
+  {% assign categories = "Archery, Camping, Fishing, Hunting, Exercise, Bicycles, Sports, Travel Gear" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Storage & Organization" %}
+  
+  {% assign categories = "Closet Storage, Food Storage & Kitchen Organization, Garage & Tool Storage, Office & School Supplies, Shelving & Shelving Units, Storage Containers, Storage Sheds & Benches, Moving Supplies" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Tools" %}
+  
+  {% assign categories = "Equipment, Flooring Materials, Hand Tools, Masonry Tools, Outdoor Power Equipment, Power Tool Accessories, Power Tools, Tool Sets, Tool Storage & Work Surfaces, Welding & Soldering" %}
+  {% assign categories_array = categories | split: ", " %}
+
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Category</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if categories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Bird" %}
+  
+  {% assign subcategories = "Bird Apparel, Bird Aquariums & Decor, Bird Beds Crates & Gates, Bird Bowls & Feeders, Bird Cleaning & Potty, Bird Dry Food, Bird Flea & Tick, Bird Grooming, Bird Habitats & Decor, Bird Leashes Collars & Training, Bird Supplies, Bird Toys, Bird Treatments, Bird Treats, Bird Wet Food, Bird Freeze-Dried Food, Bird Raw Food, Bird Frozen Food"  %}
+  {% assign subcategories_array = subcategories | split: ", " %}
+  
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Subcategory</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if subcategories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Cat" %}
+  
+  {% assign subcategories = "Cat Apparel, Cat Aquariums & Decor, Cat Beds Crates & Gates, Cat Bowls & Feeders, Cat Cleaning & Potty, Cat Dry Food, Cat Flea & Tick, Cat Grooming, Cat Habitats & Decor, Cat Leashes Collars & Training, Cat Supplies, Cat Toys, Cat Treatments, Cat Treats, Cat Wet Food, Cat Freeze-Dried Food, Cat Raw Food, Cat Frozen Food" %}
+  {% assign subcategories_array = subcategories | split: ", " %}
+  
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Subcategory</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if subcategories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+
+{% elsif collection.title == "Dog" %}
+  
+  {% assign subcategories = "Dog Apparel, Dog Aquariums & Decor, Dog Beds Crates & Gates, Dog Bowls & Feeders, Dog Cleaning & Potty, Dog Dry Food, Dog Flea & Tick, Dog Grooming, Dog Habitats & Decor, Dog Leashes Collars & Training, Dog Supplies, Dog Toys, Dog Treatments, Dog Treats, Dog Wet Food, Dog Freeze-Dried Food, Dog Raw Food, Dog Frozen Food" %}
+  {% assign subcategories_array = subcategories | split: ", " %}
+  
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Subcategory</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if subcategories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Fish" %}
+  
+  {% assign subcategories = "Fish Apparel, Fish Aquariums & Decor, Fish Beds Crates & Gates, Fish Bowls & Feeders, Fish Cleaning & Potty, Fish Dry Food, Fish Flea & Tick, Fish Grooming, Fish Habitats & Decor, Fish Leashes Collars & Training, Fish Supplies, Fish Toys, Fish Treatments, Fish Treats, Fish Wet Food, Fish Freeze-Dried Food, Fish Raw Food, Fish Frozen Food" %}
+  {% assign subcategories_array = subcategories | split: ", " %}
+  
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Subcategory</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if subcategories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Reptile" %}
+  
+  {% assign subcategories = "Reptile Apparel, Reptile Aquariums & Decor, Reptile Beds Crates & Gates, Reptile Bowls & Feeders, Reptile Cleaning & Potty, Reptile Dry Food, Reptile Flea & Tick, Reptile Grooming, Reptile Habitats & Decor, Reptile Leashes Collars & Training, Reptile Supplies, Reptile Toys, Reptile Treatments, Reptile Treats, Reptile Wet Food, Reptile Freeze-Dried Food, Reptile Raw Food, Reptile Frozen Food" %}
+  {% assign subcategories_array = subcategories | split: ", " %}
+  
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Subcategory</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if subcategories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+
+{% elsif collection.title == "Small Animal" %}
+  
+  {% assign subcategories = "Small Animal Apparel, Small Animal Aquariums & Decor, Small Animal Beds Crates & Gates, Small Animal Bowls & Feeders, Small Animal Cleaning & Potty, Small Animal Dry Food, Small Animal Flea & Tick, Small Animal Grooming, Small Animal Habitats & Decor, Small Animal Leashes Collars & Training, Small Animal Supplies, Small Animal Toys, Small Animal Treatments, Small Animal Treats, Small Animal Wet Food, Small Animal Freeze-Dried Food, Small Animal Raw Food, Small Animal Frozen Food" %}
+  {% assign subcategories_array = subcategories | split: ", " %}
+  
+  <header class="section-header">
+    <h1 class="section-header--title h1">Shop {{ collection.title }} by Subcategory</h1>
+  </header>
+
+  <div class="grid sub-collection-grid"> 
+      {% for collection in collections %}
+          {% if subcategories_array contains collection.title and collection.products_count > 0 %}
+            {% include 'sub-collection-grid-item' %}
+          {% endif %}
+      {% endfor %}
+  </div>
+{% endif %}
