@@ -20,8 +20,8 @@ Test Comment
 
 {% if collection.products_count > 4999 and request.path != '/collections/all' %}<!-- Does the collection product count exceed search and discovery app max -->
   {% include 'sub-collection-logic' %}
-{% comment %}{% elsif brand_count > 98 %}<!-- Does the brand count exceed 98 -->
-  {% include 'sub-collection-logic' %}{% endcomment %}
+ {% elsif brand_count > 98 %}
+  {% include 'sub-collection-logic' %}
 {% else %}<!-- If not load the standard collection page -->
 
 
