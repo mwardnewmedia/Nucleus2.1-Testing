@@ -153,65 +153,11 @@
 {% endif %}
 {% endunless %}
 
-{% comment %} Calculate which sections are visible for responsive flex layout {% endcomment %}
-{% assign search_visible = false %}
-{% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
-  {% assign search_visible = true %}
-{% endunless %}
-
-{% assign customer_login_visible = false %}
-{% if shop.customer_accounts_enabled %}
-  {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
-    {% assign customer_login_visible = true %}
-  {% endunless %}
-{% endif %}
-
-{% assign cart_visible = false %}
-{% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
-  {% assign cart_visible = true %}
-{% endunless %}
-  
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" id="ecom-site-header">
-  <style>
-    @media (min-width: 769px) {
-      #ecom-site-header .header-main-flex {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        width: 100% !important;
-        gap: 20px !important;
-      }
-      #ecom-site-header .header-logo-container {
-        flex: 0 0 auto !important;
-        display: flex !important;
-        align-items: center !important;
-      }
-      #ecom-site-header .header-right-container {
-        flex: 0 0 auto !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-end !important;
-        gap: 20px !important;
-        flex-wrap: nowrap !important;
-      }
-      {% if search_visible %}
-      #ecom-site-header .header-search-wrapper {
-        flex: 0 0 auto !important;
-        min-width: 250px !important;
-        max-width: 500px !important;
-      }
-      {% endif %}
-      {% if settings.nmr_local %}
-      #ecom-site-header #mighty-location-selector {
-        flex-shrink: 0 !important;
-      }
-      {% endif %}
-    }
-  </style>
   <div class="wrapper">
 
-    <div class="grid--full header-main-flex">
-      <div class="grid-item large--one-third header-logo-container">
+    <div class="grid--full" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div class="grid-item large--one-third" style="flex: 0 0 auto; display: flex; align-items: center;">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -275,12 +221,14 @@
         {% endif %}
       </div>
 
-      <div class="grid-item medium-down--hide large--one-third text-right header-right-container">
-        {% if search_visible %}
-        <div class="header-search-wrapper">
-          {% include 'ecom-search-bar' %}
-        </div>
-        {% endif %}
+      {% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
+      <div class="grid-item large--one-third text-center large--text-right" style="flex: 1 1 auto; display: flex; justify-content: center; align-items: center; min-width: 200px; max-width: 500px;">
+        {% include 'ecom-search-bar' %}
+      </div>
+      {% endunless %}
+      
+      <div class="grid-item medium-down--hide large--one-third text-right" style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center;">
+        <div class="header-right-elements" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
        
         {%if settings.nmr_local %}
           <script>
@@ -346,6 +294,9 @@
     		<span class="cart-count cart-badge--desktop">{{ cart.item_count }}</span>
           </a>
         {% endunless %}
+          </div>
+        </div>
+      
       </div>
     </div>
   </div>
