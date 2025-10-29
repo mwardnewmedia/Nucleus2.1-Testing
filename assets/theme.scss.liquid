@@ -7643,9 +7643,22 @@ div#ecom2-notification-bar .announcement-text a {
 #ecom2-site-header .flex {
     display: flex !important;
     align-items: center !important;
+    justify-content: space-between !important;
     width: 100% !important;
+    gap: 30px !important;
 }
 
+/* Logo section should not grow */
+#ecom2-site-header .flex-logo.flex-item {
+    flex: 0 0 auto !important;
+}
+
+/* Search bar when visible - takes available space */
+#ecom2-site-header .flex-auto.flex-item:not(.hide-element) {
+    flex: 1 1 auto !important;
+}
+
+/* Search bar when hidden - collapses completely */
 #ecom2-site-header .flex-item.hide-element {
     flex: 0 0 0 !important;
     min-width: 0 !important;
@@ -7653,6 +7666,13 @@ div#ecom2-notification-bar .announcement-text a {
     overflow: hidden !important;
     padding: 0 !important;
     margin: 0 !important;
+    border: none !important;
+}
+
+/* Right section should not shrink and stay on the right */
+#ecom2-site-header #ecom2-account-cart {
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
 }
 
 #ecom2-site-header #ecom2-account-cart .hide-element {
@@ -7662,6 +7682,7 @@ div#ecom2-notification-bar .announcement-text a {
     padding: 0 !important;
 }
 
+/* Ensure flex items don't wrap */
 #ecom2-site-header .flex-item {
     flex-wrap: nowrap !important;
 }
