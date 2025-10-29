@@ -7384,6 +7384,32 @@ form#ecom-round-search-bar input{
   }
 }
 
+/*============================================================================
+  Mobile Store Locator Styling
+==============================================================================*/
+.mobile-store-locator-wrapper {
+  display: none;
+  
+  @include at-query ($max, $medium) {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 0;
+    text-align: center;
+    background-color: transparent;
+    
+    #mighty-location-selector {
+      display: inline-block;
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  
+  @include at-query ($min, $large) {
+    display: none !important;
+  }
+}
+
 @media screen and (max-width: 769px) {
       header#ecom-site-header {
         display:none!important;

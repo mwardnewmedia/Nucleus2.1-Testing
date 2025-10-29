@@ -543,18 +543,20 @@ Modify at your own peril, a broken website is the likely result.
   </div> 
 {% endunless %} 
 
-{%if settings.nmr_local %}
-  <script>
-    window.MightyLocationSelectorConfig = {
-      theme: 'light',          // 'light' or 'dark' (default: 'light')
-      showHours: true,         // Show "open until" text (default: true)
-      showCityState: true,     // Show city/state below location name (default: true)
-      showPhone: false,         // Show clickable phone number (default: true)
-      defaultLocationId: null  // Default location ID to pre-select
-    };
-  </script>
-  <div id="mighty-location-selector"></div>
-  <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
+{% if settings.nmr_local %}
+  <div id="mobile-store-locator-wrapper" class="mobile-store-locator-wrapper">
+    <script>
+      window.MightyLocationSelectorConfig = {
+        theme: 'light',          // 'light' or 'dark' (default: 'light')
+        showHours: true,         // Show "open until" text (default: true)
+        showCityState: true,     // Show city/state below location name (default: true)
+        showPhone: true,         // Show clickable phone number (default: true)
+        defaultLocationId: null  // Default location ID to pre-select
+      };
+    </script>
+    <div id="mighty-location-selector"></div>
+    <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
+  </div>
 {% endif %}
 
 <nav class="nav-bar" id="navBar" role="navigation">
