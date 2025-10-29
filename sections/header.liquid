@@ -196,6 +196,22 @@ Modify at your own peril, a broken website is the likely result.
              {% endif %}
            </ul>
           {% endif %}
+          
+          {% if settings.nmr_local %}
+            <div style="display: inline-block; vertical-align: middle; margin-left: 20px;">
+              <script>
+                window.MightyLocationSelectorConfig = {
+                  theme: 'light',          // 'light' or 'dark' (default: 'light')
+                  showHours: true,         // Show "open until" text (default: true)
+                  showCityState: true,     // Show city/state below location name (default: true)
+                  showPhone: true,         // Show clickable phone number (default: true)
+                  defaultLocationId: null  // Default location ID to pre-select
+                };
+              </script>
+              <div id="mighty-location-selector"></div>
+              <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
+            </div>
+          {% endif %}
         </div>
   
     </div>
@@ -306,19 +322,6 @@ Modify at your own peril, a broken website is the likely result.
           {% include 'search-bar' %}
 		{% endunless %}
       </div>
-      {%if settings.nmr_local %}
-        <script>
-          window.MightyLocationSelectorConfig = {
-            theme: 'light',          // 'light' or 'dark' (default: 'light')
-            showHours: true,         // Show "open until" text (default: true)
-            showCityState: true,     // Show city/state below location name (default: true)
-            showPhone: true,         // Show clickable phone number (default: true)
-            defaultLocationId: null  // Default location ID to pre-select
-          };
-        </script>
-        <div id="mighty-location-selector"></div>
-        <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
-      {% endif %}
     </div>
     
     {% elsif section.settings.logo_alignment == "logo_center" %}
