@@ -156,8 +156,8 @@
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" id="ecom-site-header">
   <div class="wrapper">
 
-    <div class="grid--full">
-      <div class="grid-item large--one-third">
+    <div class="grid--full" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div class="grid-item large--one-third" style="flex: 0 0 33.333%; display: flex; align-items: center;">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -222,12 +222,12 @@
       </div>
 
       {% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
-      <div class="grid-item large--one-third text-center large--text-right">
+      <div class="grid-item large--one-third text-center large--text-right" style="flex: 0 0 33.333%; display: flex; justify-content: center; align-items: center;">
         {% include 'ecom-search-bar' %}
       </div>
       {% endunless %}
       
-      <div class="grid-item medium-down--hide large--one-third text-right">
+      <div class="grid-item medium-down--hide large--one-third text-right" style="flex: 0 0 33.333%; display: flex; justify-content: flex-end; align-items: center;">
         <div class="header-right-elements" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
        
         {%if settings.nmr_local %}
@@ -269,16 +269,16 @@
 <!-------------------------------------------------------------------->
             
             
-       <div class="customer-sign-in">
+       <div class="customer-sign-in" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
-              <i style="font-size: 24px; vertical-align: middle;" class="fa-solid fa-circle-user"></i>
+              <i style="font-size: 24px; display: block; margin-bottom: 4px;" class="fa-solid fa-circle-user"></i>
               {% if shop.customer_accounts_enabled %}
-                <span class="site-header--meta-links medium-down--hide">
+                <span class="site-header--meta-links medium-down--hide" style="text-align: center; display: block;">
                 {% if customer %}
                    {% capture first_name %}{% endcapture %}
-                    <a style="display:block;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a>
+                    <a style="display:block; text-align: center;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a>
                   {% else %}
-                    <span style="margin-right: 30px;">{{ 'layout.customer.sign_in' | t | customer_login_link }}</span>
+                    <span style="display: block; text-align: center;">{{ 'layout.customer.sign_in' | t | customer_login_link }}</span>
                 {% endif %}    
                 </span>
               {% endif %}
