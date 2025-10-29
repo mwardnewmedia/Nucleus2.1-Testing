@@ -232,9 +232,9 @@
       </div>
 
       {% if settings.nmr_local %}
-        <div class="flex-item" style="display: flex; justify-content: flex-start; align-items: center; gap: 20px; flex-wrap: nowrap;" id="ecom2-account-cart">      
+        <div class="flex-item" style="display: flex; align-items: center; gap: 20px; flex-wrap: nowrap;" id="ecom2-account-cart">      
       {% else %}
-        <div class="flex-item" style="display: flex; justify-content: flex-start; align-items: center; gap: 30px; flex-wrap: nowrap;" id="ecom2-account-cart">      
+        <div class="flex-item" style="display: flex; align-items: center; gap: 30px; flex-wrap: nowrap;" id="ecom2-account-cart">      
       {% endif %}
         {%if settings.nmr_local %}
           <div class="header-store-locator">
@@ -378,19 +378,28 @@
   
   <div class="flex-header-item" id="shopping-links" style="flex:auto;">
     {% if section.settings.hide_shopping_links %}
-    	<ul id="mobile-contact-info">
+    	{% unless settings.nmr_local %}
+        <ul id="mobile-contact-info">
+          
+          {% if section.settings.show_phone %}
+          <li><a aria-label="phone number" href="tel:{{ section.settings.header_phone | escape }}"><span class="fa-solid fa-phone"></span></a></li>
+          {% endif %}
+          {% if section.settings.show_email %}
+          <li><a aria-label="email" href="mailto:{{ section.settings.header_email | escape }}"><span class="fa-solid fa-envelope"></span></a></li>
+          {% endif %}
+          {% if section.settings.show_locations %}
+          <li><a aria-label="locations" href="{{ section.settings.header_locations | escape }}"><span class="fa-solid fa-location-dot"></span></a></li>
+          {% endif %}
         
-        {% if section.settings.show_phone %}
-        <li><a aria-label="phone number" href="tel:{{ section.settings.header_phone | escape }}"><span class="fa-solid fa-phone"></span></a></li>
-        {% endif %}
-        {% if section.settings.show_email %}
-        <li><a aria-label="email" href="mailto:{{ section.settings.header_email | escape }}"><span class="fa-solid fa-envelope"></span></a></li>
-        {% endif %}
-        {% if section.settings.show_locations %}
-        <li><a aria-label="locations" href="{{ section.settings.header_locations | escape }}"><span class="fa-solid fa-location-pin"></span></a></li>
-        {% endif %}
-      
-      </ul>
+        </ul>
+      {% endunless %}
+    {% else %}
+      {% unless page.template_suffix contains 'dalp' %}
+        <a href="/cart" class="cart-toggle mobileNavBar-link" style="display: flex; line-height: 1.6; flex-direction: column;">
+        <span class="icon icon-cart" style="line-height: 1.6;"><span class="sr-only">Cart</span></span>
+        <span class="cart-count {% if cart.item_count == 0 %}hidden-count{% endif %}">{{ cart.item_count }}</span>
+        </a>
+      {% endunless %}
     {% else %}
       {% unless page.template_suffix contains 'dalp' %}
         <a href="/cart" class="cart-toggle mobileNavBar-link" style="display: flex; line-height: 1.6; flex-direction: column;">
