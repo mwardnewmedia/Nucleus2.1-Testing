@@ -232,17 +232,17 @@
       {% endunless %}
 
       {% if settings.nmr_local %}
-        <div class="flex-item" style="display: flex; justify-content: center; align-items: center; width: 100%; max-width: 400px; margin-left: 30px;" id="ecom2-account-cart">      
+        <div class="flex-item" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 400px; margin-left: 30px; gap: 20px;" id="ecom2-account-cart">      
       {% else %}
-        <div class="flex-item" style="display: flex; justify-content: center; align-items: center;" id="ecom2-account-cart">      
+        <div class="flex-item" style="display: flex; justify-content: space-between; align-items: center; gap: 20px;" id="ecom2-account-cart">      
       {% endif %}
         {%if settings.nmr_local %}
-          <div id="mighty-location-selector" style="display: inline-block; vertical-align: middle; margin-right: 15px;"></div>
+          <div id="mighty-location-selector" style="display: inline-block; vertical-align: middle;"></div>
           <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
         {% endif %}
 		{% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
               {% if settings.nmr_local %}
-                <div style="display: flex; align-items: center; white-space: nowrap; margin-left: 30px;">
+                <div style="display: flex; align-items: center; white-space: nowrap;">
                   <i style="font-size: 24px; margin-right: 8px;" class="fa-solid fa-circle-user"></i>
                   {% if shop.customer_accounts_enabled %}
                     <span class="ecom2-site-header--text-links medium-down--hide" style="white-space: nowrap; margin-left: 0px;">
@@ -256,7 +256,7 @@
                   {% endif %}
                 </div>
               {% else %}
-                <div style="display: flex; align-items: center; white-space: nowrap; margin-left: 30px;">
+                <div style="display: flex; align-items: center; white-space: nowrap;">
                   <i style="font-size: 24px; margin-right: 8px;" class="fa-solid fa-circle-user"></i>
                   {% if shop.customer_accounts_enabled %}
                     <span class="ecom2-site-header--text-links medium-down--hide" style="white-space: nowrap;">
@@ -266,7 +266,7 @@
                       {% else %}
                         {{ 'layout.customer.sign_in' | t | customer_login_link }}
                         <span class="site-header--spacer">{{ 'layout.customer.or' | t }}</span>
-                        <span style="margin-right: 30px;">{{ 'layout.customer.create_account' | t | customer_register_link }}</span>
+                        <span>{{ 'layout.customer.create_account' | t | customer_register_link }}</span>
                     {% endif %}    
                     </span>
                   {% endif %}
@@ -275,7 +275,7 @@
             {% endunless %}
             
 		    {% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
-          <a href="{{ routes.cart_url }}" class="header-cart-btn ecom2-cart cart-toggle" id="ecom-header-cart" aria-label="shopping cart" style="margin: 0 15px;">
+          <a href="{{ routes.cart_url }}" class="header-cart-btn ecom2-cart cart-toggle" id="ecom-header-cart" aria-label="shopping cart">
             <span class="icon icon-cart"></span>
     		<span class="cart-count cart-badge--desktop">{{ cart.item_count }}</span>
           </a>
