@@ -7733,6 +7733,57 @@ div#ecom2-notification-bar .announcement-text a {
 #ecom3-site-header .flex {
   	display:flex;
   	align-items:center;
+  	width: 100% !important;
+}
+
+/* Ensure ecom3-header layout maintains structure when elements are hidden */
+/* Logo section should not grow */
+#ecom3-site-header .flex-logo.flex-item {
+    flex: 0 0 auto !important;
+}
+
+/* Search bar when visible - takes available space */
+#ecom3-site-header .flex-auto.flex-item:not(.hide-element) {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+
+/* Search bar when hidden - collapses completely */
+#ecom3-site-header .flex-item.hide-element {
+    flex: 0 0 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    width: 0 !important;
+}
+
+/* Right section - should not grow/shrink and stay aligned right */
+#ecom3-site-header #ecom3-account-cart {
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    justify-content: flex-end !important;
+}
+
+/* Store locator wrapper */
+#ecom3-site-header .header-store-locator-wrapper {
+    flex-shrink: 0 !important;
+}
+
+#ecom3-site-header #ecom3-account-cart .hide-element {
+    display: none !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure flex items don't wrap */
+#ecom3-site-header .flex-item {
+    flex-wrap: nowrap !important;
 }
 
 #ecom3-notification-bar .contact-bar li {
