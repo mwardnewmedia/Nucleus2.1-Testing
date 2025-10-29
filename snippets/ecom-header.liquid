@@ -210,6 +210,22 @@
                 style="max-height:{{ section.settingssponsor_logo_max_height }}px;">
             </noscript>
           </a>
+          {% endif %}
+          
+          {% if settings.nmr_local %}
+            <div style="margin-left: 15px; display: inline-block;">
+              <script>
+                window.MightyLocationSelectorConfig = {
+                  theme: 'light',          // 'light' or 'dark' (default: 'light')
+                  showHours: true,         // Show "open until" text (default: true)
+                  showCityState: true,     // Show city/state below location name (default: true)
+                  showPhone: true,         // Show clickable phone number (default: true)
+                  defaultLocationId: null  // Default location ID to pre-select
+                };
+              </script>
+              <div id="mighty-location-selector"></div>
+              <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
+            </div>
           {% endif %}  
           {% else %}
             <a href="{{ routes.root_url }}" itemprop="url">{{ shop.name }}</a>
@@ -229,20 +245,6 @@
       
       <div class="grid-item medium-down--hide large--one-third text-right">
         <div class="header-right-elements" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
-       
-        {% if settings.nmr_local %}
-          <script>
-            window.MightyLocationSelectorConfig = {
-              theme: 'light',          // 'light' or 'dark' (default: 'light')
-              showHours: true,         // Show "open until" text (default: true)
-              showCityState: true,     // Show city/state below location name (default: true)
-              showPhone: true,         // Show clickable phone number (default: true)
-              defaultLocationId: null  // Default location ID to pre-select
-            };
-          </script>
-          <div id="mighty-location-selector"></div>
-          <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
-        {% endif %}
 
         {% if shop.customer_accounts_enabled %}
           <div class="site-header--text-links" id="ecom-header-text-links">
