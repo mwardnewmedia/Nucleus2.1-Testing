@@ -554,8 +554,39 @@ Modify at your own peril, a broken website is the likely result.
         defaultLocationId: null  // Default location ID to pre-select
       };
     </script>
-    <div id="mighty-location-selector"></div>
-    <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
+    <div id="mighty-location-selector" class="mobile-location-selector"></div>
+    <script>
+      // Load widget script only on mobile screens
+      (function() {
+        function loadMobileWidget() {
+          if (window.innerWidth <= 768 || window.matchMedia('(max-width: 768px)').matches) {
+            var mobileWrapper = document.getElementById('mobile-store-locator-wrapper');
+            var mobileSelector = document.querySelector('#mobile-store-locator-wrapper #mighty-location-selector');
+            
+            if (mobileWrapper && mobileSelector) {
+              // Check if widget is already loaded/rendered
+              var existingScript = document.querySelector('script[src*="mighty-location-selector-widget.js"]');
+              var hasContent = mobileSelector.hasChildNodes() && mobileSelector.children.length > 0;
+              
+              if (!existingScript || !hasContent) {
+                var script = document.createElement('script');
+                script.src = 'https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js';
+                script.async = true;
+                document.body.appendChild(script);
+              }
+            }
+          }
+        }
+        
+        // Check on load and on resize
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', loadMobileWidget);
+        } else {
+          loadMobileWidget();
+        }
+        window.addEventListener('resize', loadMobileWidget);
+      })();
+    </script>
   </div>
 {% endif %}
 
