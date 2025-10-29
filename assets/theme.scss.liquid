@@ -7378,6 +7378,45 @@ form#ecom-round-search-bar input{
     margin-bottom: 0;
 }
 
+/* Hide element utility class - maintains flex layout space */
+.hide-element {
+    display: none !important;
+}
+
+/* Ensure header layout maintains structure when elements are hidden */
+#ecom-site-header .grid--full {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+#ecom-site-header .header-right-elements {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 15px !important;
+    flex-wrap: nowrap !important;
+}
+
+/* Maintain space in flex layout even when search bar is hidden */
+#ecom-site-header .grid-item.hide-element {
+    flex: 0 0 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Ensure right section stays aligned when elements are hidden */
+#ecom-site-header .header-right-elements .hide-element {
+    display: none !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 @media screen and (min-width: 769px) {
   #ecom-mobile-search {
     display:none!important;
@@ -7598,6 +7637,33 @@ div#ecom2-notification-bar .announcement-text a {
 
 .flex-header-item {
   width:33%!important;
+}
+
+/* Ensure ecom2-header layout maintains structure when elements are hidden */
+#ecom2-site-header .flex {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+#ecom2-site-header .flex-item.hide-element {
+    flex: 0 0 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+#ecom2-site-header #ecom2-account-cart .hide-element {
+    display: none !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#ecom2-site-header .flex-item {
+    flex-wrap: nowrap !important;
 }
 
 /**********************

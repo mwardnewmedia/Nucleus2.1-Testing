@@ -225,16 +225,16 @@
         {% endif %}
       </div>
 
-      {% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
-      <div class="flex-auto flex-item">
-        {% include 'ecom2-search-bar' %}
+      <div class="flex-auto flex-item{% if section.settings.hide_search_bar or page.template_suffix contains 'dalp' %} hide-element{% endif %}">
+        {% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
+          {% include 'ecom2-search-bar' %}
+        {% endunless %}
       </div>
-      {% endunless %}
 
       {% if settings.nmr_local %}
-        <div class="flex-item" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 400px; margin-left: 30px; gap: 20px;" id="ecom2-account-cart">      
+        <div class="flex-item" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 400px; margin-left: 30px; gap: 20px; flex-wrap: nowrap;" id="ecom2-account-cart">      
       {% else %}
-        <div class="flex-item" style="display: flex; justify-content: flex-start; align-items: center; gap: 30px; margin-left: 30px;" id="ecom2-account-cart">      
+        <div class="flex-item" style="display: flex; justify-content: flex-start; align-items: center; gap: 30px; margin-left: 30px; flex-wrap: nowrap;" id="ecom2-account-cart">      
       {% endif %}
         {%if settings.nmr_local %}
           <div class="header-store-locator">
@@ -251,7 +251,8 @@
             <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
           </div>
         {% endif %}
-		{% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
+		<div class="header-customer-login-wrapper{% if section.settings.hide_customer_login or page.template_suffix contains 'dalp' %} hide-element{% endif %}">
+          {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
               {% if settings.nmr_local %}
                 <div style="display: flex; align-items: center; white-space: nowrap;">
                   <i style="font-size: 24px; margin-right: 8px;" class="fa-solid fa-circle-user"></i>
@@ -284,13 +285,16 @@
                 </div>
               {% endif %}
             {% endunless %}
+        </div>
             
-		    {% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
-          <a href="{{ routes.cart_url }}" class="header-cart-btn ecom2-cart cart-toggle" id="ecom-header-cart" aria-label="shopping cart">
-            <span class="icon icon-cart"></span>
-    		<span class="cart-count cart-badge--desktop">{{ cart.item_count }}</span>
-          </a>
-        {% endunless %}
+		    <div class="header-cart-wrapper{% if section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %} hide-element{% endif %}">
+          {% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
+            <a href="{{ routes.cart_url }}" class="header-cart-btn ecom2-cart cart-toggle" id="ecom-header-cart" aria-label="shopping cart">
+              <span class="icon icon-cart"></span>
+      		  <span class="cart-count cart-badge--desktop">{{ cart.item_count }}</span>
+            </a>
+          {% endunless %}
+        </div>
 
       </div>
     </div>
