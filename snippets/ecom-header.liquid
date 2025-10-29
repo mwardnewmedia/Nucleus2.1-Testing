@@ -156,12 +156,12 @@
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" id="ecom-site-header">
   <div class="wrapper">
 
-    <div class="grid--full">
-      <div class="grid-item large--one-third">
+    <div class="grid--full" style="display: flex; align-items: center;">
+      <div class="grid-item" style="flex: 0 0 35%; max-width: 35%; min-width: 0; float: none;">
         {% if request.page_type == 'index' %}
-          <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization" style="display: flex; align-items: center; flex-wrap: nowrap;">
+          <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization" style="display: flex; align-items: center; flex-wrap: nowrap; width: 100%;">
         {% else %}
-          <div class="h1 header-logo" itemscope itemtype="http://schema.org/Organization" style="display: flex; align-items: center; flex-wrap: nowrap;">
+          <div class="h1 header-logo" itemscope itemtype="http://schema.org/Organization" style="display: flex; align-items: center; flex-wrap: nowrap; width: 100%;">
         {% endif %}
           {% if section.settings.logo %}
           {% capture image_size %}{{ section.settings.logo_max_height | escape }}x{% endcapture %}
@@ -213,7 +213,7 @@
           {% endif %}
           
           {% if settings.nmr_local %}
-            <div style="margin-left: 15px; flex-shrink: 0;">
+            <div style="margin-left: 15px; flex-shrink: 0; white-space: nowrap;">
               <script>
                 window.MightyLocationSelectorConfig = {
                   theme: 'light',          // 'light' or 'dark' (default: 'light')
@@ -238,12 +238,12 @@
       </div>
 
       {% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
-      <div class="grid-item large--one-third text-center large--text-right">
+      <div class="grid-item text-center large--text-right" style="flex: 1 1 GNU auto; min-width: 250px; max-width: 40%; float: none;">
         {% include 'ecom-search-bar' %}
       </div>
       {% endunless %}
       
-      <div class="grid-item medium-down--hide large--one-third text-right">
+      <div class="grid-item medium-down--hide text-right" style="flex: 0 0 25%; max-width: 25%; float: none;">
         <div class="header-right-elements" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
 
         {% if shop.customer_accounts_enabled %}
