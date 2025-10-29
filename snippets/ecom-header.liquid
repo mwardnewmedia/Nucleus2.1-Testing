@@ -159,15 +159,15 @@
     <div class="grid--full">
       <div class="grid-item large--one-third">
         {% if request.page_type == 'index' %}
-          <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
+          <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization" style="display: flex; align-items: center; flex-wrap: nowrap;">
         {% else %}
-          <div class="h1 header-logo" itemscope itemtype="http://schema.org/Organization">
+          <div class="h1 header-logo" itemscope itemtype="http://schema.org/Organization" style="display: flex; align-items: center; flex-wrap: nowrap;">
         {% endif %}
           {% if section.settings.logo %}
           {% capture image_size %}{{ section.settings.logo_max_height | escape }}x{% endcapture %}
           {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
           {% capture logo_alt %}{{ section.settings.logo.alt | default: shop.name }}{% endcapture %}
-          <a href="{{ routes.root_url }}" itemprop="url">
+          <a href="{{ routes.root_url }}" itemprop="url" style="flex-shrink: 0;">
             <div class="lazyload__image-wrapper no-js header-logo__image" style="max-height:{{ section.settings.logo_max_height }}px;">
                 <img class="lazyload js"
                   data-src="{{ img_url }}"
@@ -191,7 +191,7 @@
           {% capture image_size %}{{ section.settings.sponsor_logo_max_height | escape }}x{% endcapture %}
           {%- assign img_url = section.settings.sponsor_logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
           {% capture sponsor_logo_alt %}{{ section.settings.sponsor_logo.alt | default: shop.name }}{% endcapture %}
-          <a href="{{ section.settings.sponsor_link }}" itemprop="url" style="margin-left:10px;" class="medium-down--hide">
+          <a href="{{ section.settings.sponsor_link }}" itemprop="url" style="margin-left:10px; flex-shrink: 0;" class="medium-down--hide">
             <div class="lazyload__image-wrapper no-js header-logo__image" style="max-height:{{ section.settings.sponsor_logo_max_height }}px;">
                 <img class="lazyload js"
                   data-src="{{ img_url }}"
@@ -213,7 +213,7 @@
           {% endif %}
           
           {% if settings.nmr_local %}
-            <div style="margin-left: 15px; display: inline-block;">
+            <div style="margin-left: 15px; flex-shrink: 0;">
               <script>
                 window.MightyLocationSelectorConfig = {
                   theme: 'light',          // 'light' or 'dark' (default: 'light')
