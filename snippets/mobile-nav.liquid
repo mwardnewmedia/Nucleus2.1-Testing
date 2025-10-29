@@ -349,6 +349,7 @@
 
   <!-- Contact Information Section -->
   {% if section.settings.show_contact_bar %}
+    {% unless settings.nmr_local %}
     <li class="mobile-nav--contact-section">
         <div class="mobile-nav--contact-icons" style="text-align: center; padding: 15px 0; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%;">
           {% if section.settings.multi_locations %}
@@ -380,5 +381,6 @@
           {% endif %}
         </div>
     </li>
+    {% endunless %}
   {% endif %}
 </ul>
