@@ -7424,6 +7424,22 @@ form#ecom-round-search-bar input{
   }
 }
 
+/*============================================================================
+  Mighty Location Selector Phone Styling - Use Header Text Color
+==============================================================================*/
+.mighty-location-selector-phone {
+  color: $headerText !important;
+  
+  a {
+    color: $headerText !important;
+    
+    &:hover,
+    &:focus {
+      color: lighten($headerText, 15%) !important;
+    }
+  }
+}
+
 @media screen and (max-width: 769px) {
       header#ecom-site-header {
         display:none!important;
