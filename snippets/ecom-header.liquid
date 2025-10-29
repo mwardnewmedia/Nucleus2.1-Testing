@@ -152,12 +152,81 @@
 </div>
 {% endif %}
 {% endunless %}
+
+{% comment %} Calculate which sections are visible for responsive flex layout {% endcomment %}
+{% assign search_visible = false %}
+{% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
+  {% assign search_visible = true %}
+{% endunless %}
+
+{% assign customer_login_visible = false %}
+{% if shop.customer_accounts_enabled %}
+  {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
+    {% assign customer_login_visible = true %}
+  {% endunless %}
+{% endif %}
+
+{% assign cart_visible = false %}
+{% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
+  {% assign cart_visible = true %}
+{% endunless %}
   
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" id="ecom-site-header">
+  <style>
+    @media (min-width: 769px) {
+      #ecom-site-header .header-main-flex {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        gap: 20px !important;
+      }
+      #ecom-site-header .header-logo-column {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        min-width: 0 !important;
+      }
+      {% if search_visible %}
+      #ecom-site-header .header-search-column {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        min-width: 200px !important;
+        max-width: 500px !important;
+      }
+      {% endif %}
+      #ecom-site-header .header-right-column {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        min-width: 0 !important;
+      }
+      #ecom-site-header .header-right-elements {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 15px !important;
+        flex-wrap: nowrap !important;
+      }
+      {% unless customer_login_visible and cart_visible %}
+      #ecom-site-header .header-right-elements {
+        gap: 10px !important;
+      }
+      {% endunless %}
+      {% if settings.nmr_local %}
+      #ecom-site-header #mighty-location-selector {
+        flex-shrink: 0 !important;
+      }
+      {% endif %}
+    }
+  </style>
   <div class="wrapper">
 
-    <div class="grid--full" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-      <div class="grid-item large--one-third" style="flex: 0 0 33.333%; display: flex; align-items: center;">
+    <div class="grid--full header-main-flex">
+      <div class="grid-item large--one-third header-logo-column">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
