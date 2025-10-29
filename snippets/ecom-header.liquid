@@ -269,16 +269,16 @@
 <!-------------------------------------------------------------------->
             
             
-       <div class="customer-sign-in" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+       <div class="customer-sign-in" style="display: flex; flex-direction: {% if settings.nmr_local %}column{% else %}row{% endif %}; align-items: center; justify-content: center; gap: {% if settings.nmr_local %}0{% else %}8px{% endif %};">
         {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
-              <i style="font-size: 24px; display: block; margin-bottom: 4px;" class="fa-solid fa-circle-user"></i>
+              <i style="font-size: 24px; {% if settings.nmr_local %}display: block; margin-bottom: 1px;{% else %}display: inline-block; vertical-align: middle;{% endif %}" class="fa-solid fa-circle-user"></i>
               {% if shop.customer_accounts_enabled %}
-                <span class="site-header--meta-links medium-down--hide" style="text-align: center; display: block;">
+                <span class="site-header--meta-links medium-down--hide" style="{% if settings.nmr_local %}text-align: center; display: block;{% else %}display: inline-block;{% endif %}">
                 {% if customer %}
                    {% capture first_name %}{% endcapture %}
-                    <a style="display:block; text-align: center;" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a>
+                    <a style="{% if settings.nmr_local %}display:block; text-align: center;{% else %}display:inline-block;{% endif %}" href="{{ routes.account_url }}">Hi, {{ customer.first_name }}</a>
                   {% else %}
-                    <span style="display: block; text-align: center;">{{ 'layout.customer.sign_in' | t | customer_login_link }}</span>
+                    <span style="{% if settings.nmr_local %}display: block; text-align: center;{% else %}display: inline-block;{% endif %}">{{ 'layout.customer.sign_in' | t | customer_login_link }}</span>
                 {% endif %}    
                 </span>
               {% endif %}
