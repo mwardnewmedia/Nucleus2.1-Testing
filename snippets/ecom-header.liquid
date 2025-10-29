@@ -230,6 +230,20 @@
       <div class="grid-item medium-down--hide large--one-third text-right">
         <div class="header-right-elements" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px;">
        
+        {% if settings.nmr_local %}
+          <script>
+            window.MightyLocationSelectorConfig = {
+              theme: 'light',          // 'light' or 'dark' (default: 'light')
+              showHours: true,         // Show "open until" text (default: true)
+              showCityState: true,     // Show city/state below location name (default: true)
+              showPhone: true,         // Show clickable phone number (default: true)
+              defaultLocationId: null  // Default location ID to pre-select
+            };
+          </script>
+          <div id="mighty-location-selector"></div>
+          <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
+        {% endif %}
+
         {% if shop.customer_accounts_enabled %}
           <div class="site-header--text-links" id="ecom-header-text-links">
             
@@ -254,6 +268,7 @@
 
 <!-------------------------------------------------------------------->
             
+            
        <div class="customer-sign-in">
         {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
               <i style="font-size: 24px; vertical-align: middle;" class="fa-solid fa-circle-user"></i>
@@ -270,6 +285,8 @@
             {% endunless %}  
          
          </div> 
+          </div>
+        {% endif %}
         
         {% unless section.settings.hide_shopping_links or page.template_suffix contains 'dalp' %}
           <a href="{{ routes.cart_url }}" class="header-cart-btn ecom-cart cart-toggle" id="ecom-header-cart" aria-label="shopping cart">
@@ -277,14 +294,7 @@
     		<span class="cart-count cart-badge--desktop">{{ cart.item_count }}</span>
           </a>
         {% endunless %}
-
-        {%if settings.nmr_local %}
-          <div id="mighty-location-selector" style="display: inline-block; vertical-align: middle;"></div>
-          <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
-        {% endif %}
           </div>
-        </div>
-        {% endif %}
       
       </div>
     </div>
