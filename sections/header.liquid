@@ -203,6 +203,33 @@ Modify at your own peril, a broken website is the likely result.
 {% endif %}
 
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section">
+  <style>
+    @media (min-width: 769px) {
+      .header-right-flex-wrapper {
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: flex-end !important;
+        gap: 15px !important;
+        flex-wrap: nowrap !important;
+      }
+      .header-right-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+        gap: 10px !important;
+        flex: 0 0 auto !important;
+      }
+      .header-cart-search-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 15px !important;
+      }
+      .header-store-locator {
+        flex-shrink: 0 !important;
+        align-self: flex-start !important;
+      }
+    }
+  </style>
   <div class="wrapper">
     
     {% if section.settings.logo_alignment == "logo_left"  %}
@@ -273,8 +300,8 @@ Modify at your own peril, a broken website is the likely result.
       </div>
 
       <div class="grid-item medium-down--hide {% if settings.nmr_local %}large--one-fourth{% else %}large--one-half{% endif %} text-center large--text-right">
-        <div style="display: flex; align-items: flex-start; justify-content: flex-end; gap: 15px; flex-wrap: nowrap;">
-          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex: 0 0 auto;">
+        <div class="header-right-flex-wrapper">
+          <div class="header-right-content">
             <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
               <span style="display: flex; align-items: center;">
                 {% unless section.settings.hide_customer_login %}
@@ -295,7 +322,7 @@ Modify at your own peril, a broken website is the likely result.
               </span>
             </div>
 
-            <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="header-cart-search-row">
               {% unless section.settings.hide_shopping_links%}
               <a href="{{ routes.cart_url }}" class="header-cart-btn cart-toggle" aria-label="shopping cart">
                 <span class="icon icon-cart" style="color: #fff"></span>
@@ -310,7 +337,7 @@ Modify at your own peril, a broken website is the likely result.
           </div>
 
           {%if settings.nmr_local %}
-            <div style="flex-shrink: 0; align-self: flex-start;">
+            <div class="header-store-locator">
               <script>
                 window.MightyLocationSelectorConfig = {
                   theme: 'light',          // 'light' or 'dark' (default: 'light')
