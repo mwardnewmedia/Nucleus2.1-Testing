@@ -2618,8 +2618,12 @@ theme.Product = (function() {
                 this.settings.selectors.$variantQuantityMessage.html('Available Inventory: ' + label);
                 this.settings.selectors.$variantQuantity.addClass('is-visible');
               } else {
-                // House Hasson OFF: always show numeric Available Inventory: N
-                this.settings.selectors.$variantQuantityMessage.html('Available Inventory: ' + qty);
+                // House Hasson OFF: show contact message when qty <= 0, else numeric
+                if (qty <= 0) {
+                  this.settings.selectors.$variantQuantityMessage.html('Contact us to check availability');
+                } else {
+                  this.settings.selectors.$variantQuantityMessage.html('Available Inventory: ' + qty);
+                }
                 this.settings.selectors.$variantQuantity.addClass('is-visible');
               }
             }
