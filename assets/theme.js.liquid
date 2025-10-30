@@ -2227,6 +2227,7 @@ theme.Product = (function() {
       ajaxCartMethod: $container.attr('data-ajax-cart-method'),
       stockSetting: $container.attr('data-stock'),
       incomingMessage: $container.attr('data-incoming-transfer'),
+      houseHassonCatalog: $container.attr('data-house-hasson-catalog'),
       selectors: {
         unitPriceContainer: '[data-unit-price-container]',
         unitPrice: '[data-unit-price]',
@@ -2600,10 +2601,28 @@ theme.Product = (function() {
           }
 
           if (variant.inventory_management) {
-            // Show how many items are left, if below 10
-            if (variant.inventory_quantity < 10 && variant.inventory_quantity > 0 && this.settings.stockSetting == 'true') {
-              this.settings.selectors.$variantQuantityMessage.html(theme.strings.product.only_left.replace('1', variant.inventory_quantity));
+            // If House Hasson catalog is enabled, use categorical inventory messaging
+            if (this.settings.houseHassonCatalog == 'true' && this.settings.stockSetting == 'true') {
+              var qty = variant.inventory_quantity;
+              var label = '';
+              if (qty <= 0) {
+                label = 'Out of Stock';
+              } else if (qty >= 20) {
+                label = 'In Stock';
+              } else if (qty >= 10) {
+                label = 'Low Stock';
+              } else {
+                // 1-9
+                label = 'Low Stock';
+              }
+              this.settings.selectors.$variantQuantityMessage.html('Available Inventory: ' + label);
               this.settings.selectors.$variantQuantity.addClass('is-visible');
+            } else {
+              // Default behavior: show numeric message when below 10
+              if (variant.inventory_quantity < 10 && variant.inventory_quantity > 0 && this.settings.stockSetting == 'true') {
+                this.settings.selectors.$variantQuantityMessage.html(theme.strings.product.only_left.replace('1', variant.inventory_quantity));
+                this.settings.selectors.$variantQuantity.addClass('is-visible');
+              }
             }
           }
 
