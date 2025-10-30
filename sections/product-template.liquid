@@ -292,10 +292,12 @@ Modify at your own peril, a broken website is the likely result.
     {% include 'svg-definitions' with 'stock-icon' %}
     <span id="variantQuantity-{{ section.id }}__message">
     Available Inventory: {{ qty }}
+    </span>
   {% endif %}
   
   {% if section.settings.product_quantity_message and section.settings.house_hasson_catalog %}
-    {% include 'svg-definitions' with 'stock-icon' %} Available Inventory: 
+    {% include 'svg-definitions' with 'stock-icon' %}
+    <span id="variantQuantity-{{ section.id }}__message">Available Inventory: 
       {% if qty == 0 %}
         Out of Stock
       {% elsif qty >= 10 and qty < 20 %}
