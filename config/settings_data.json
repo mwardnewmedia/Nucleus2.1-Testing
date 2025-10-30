@@ -377,7 +377,7 @@
           "enable_fulfillment_options": false,
           "per_location_inventory": false,
           "product_quantity_message": true,
-          "house_hasson_catalog": true,
+          "house_hasson_catalog": false,
           "product_in_out_stock_message": false,
           "product_incoming_message": false,
           "shipping_disclaimer": true,
