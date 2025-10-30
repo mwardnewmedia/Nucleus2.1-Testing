@@ -236,13 +236,15 @@ Modify at your own peril, a broken website is the likely result.
     }
     @media (max-width: 768px) {
       .logo-left-flex {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
         text-align: center !important;
       }
-      .logo-left-flex .header-logo {
-        text-align: center !important;
-      }
+      .logo-left-flex .header-logo,
       .logo-left-flex .header-logo__image {
+        text-align: center !important;
         margin: 0 auto !important;
       }
     }
