@@ -158,10 +158,23 @@
 {% endunless %}
 
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" id="ecom2-site-header">
+  <style>
+    @media (min-width: 769px) {
+      #ecom2-site-header .ecom2-row { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 15px !important; width: 100% !important; }
+      #ecom2-site-header .ecom2-left { flex: 0 0 {% if settings.nmr_local %}40%{% else %}auto{% endif %} !important; display: flex !important; align-items: center !important; }
+      #ecom2-site-header .ecom2-center { flex: 1 1 auto !important; display: flex !important; justify-content: center !important; align-items: center !important; min-width: 200px !important; }
+      #ecom2-site-header .ecom2-center .search-bar { width: 100% !important; max-width: 760px !important; }
+      #ecom2-site-header .ecom2-right { flex: 0 0 260px !important; display: flex !important; justify-content: flex-end !important; align-items: center !important; min-width: fit-content !important; }
+    }
+    @media (max-width: 768px) {
+      #ecom2-site-header .ecom2-left-flex { display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; text-align: center !important; }
+    }
+  </style>
   <div class="wrapper">
 
-    <div class="flex">
-      <div class="flex-logo flex-item" style="margin-right:30px;">
+    <div class="flex ecom2-row">
+      <div class="flex-logo flex-item ecom2-left" style="margin-right:30px;">
+        <div class="ecom2-left-flex" style="display:flex; align-items:center; gap:15px;">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -223,34 +236,35 @@
         {% else %}
           </div>
         {% endif %}
+        {% if settings.nmr_local %}
+          <div class="header-store-locator medium-down--hide">
+            <script>
+              window.MightyLocationSelectorConfig = {
+                theme: 'light',
+                showHours: true,
+                showCityState: true,
+                showPhone: true,
+                defaultLocationId: null
+              };
+            </script>
+            <div id="mighty-location-selector"></div>
+            <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js" defer></script>
+          </div>
+        {% endif %}
+        </div>
       </div>
 
-      <div class="flex-auto flex-item{% if section.settings.hide_search_bar or page.template_suffix contains 'dalp' %} hide-element{% endif %}">
+      <div class="flex-auto flex-item ecom2-center{% if section.settings.hide_search_bar or page.template_suffix contains 'dalp' %} hide-element{% endif %}">
         {% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
           {% include 'ecom2-search-bar' %}
         {% endunless %}
       </div>
 
       {% if settings.nmr_local %}
-        <div class="flex-item" style="display: flex; align-items: center; gap: 20px; flex-wrap: nowrap;" id="ecom2-account-cart">      
+        <div class="flex-item ecom2-right" style="display: flex; align-items: center; gap: 20px; flex-wrap: nowrap;" id="ecom2-account-cart">      
       {% else %}
-        <div class="flex-item" style="display: flex; align-items: center; gap: 30px; flex-wrap: nowrap;" id="ecom2-account-cart">      
+        <div class="flex-item ecom2-right" style="display: flex; align-items: center; gap: 30px; flex-wrap: nowrap;" id="ecom2-account-cart">      
       {% endif %}
-        {%if settings.nmr_local %}
-          <div class="header-store-locator">
-            <script>
-              window.MightyLocationSelectorConfig = {
-                theme: 'light',          // 'light' or 'dark' (default: 'light')
-                showHours: true,         // Show "open until" text (default: true)
-                showCityState: true,     // Show city/state below location name (default: true)
-                showPhone: true,         // Show clickable phone number (default: true)
-                defaultLocationId: null  // Default location ID to pre-select
-              };
-            </script>
-            <div id="mighty-location-selector"></div>
-            <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
-          </div>
-        {% endif %}
 		<div class="header-customer-login-wrapper{% if section.settings.hide_customer_login or page.template_suffix contains 'dalp' %} hide-element{% endif %}" style="margin-left:30px;">
           {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
               {% if settings.nmr_local %}
