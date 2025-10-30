@@ -2601,26 +2601,25 @@ theme.Product = (function() {
           }
 
           if (variant.inventory_management) {
-            // If House Hasson catalog is enabled, use categorical inventory messaging
-            if (this.settings.houseHassonCatalog == 'true' && this.settings.stockSetting == 'true') {
+            if (this.settings.stockSetting == 'true') {
               var qty = variant.inventory_quantity;
-              var label = '';
-              if (qty <= 0) {
-                label = 'Out of Stock';
-              } else if (qty >= 20) {
-                label = 'In Stock';
-              } else if (qty >= 10) {
-                label = 'Low Stock';
+              // House Hasson ON: categorical labels
+              if (this.settings.houseHassonCatalog == 'true') {
+                var label = '';
+                if (qty <= 0) {
+                  label = 'Out of Stock';
+                } else if (qty >= 20) {
+                  label = 'In Stock';
+                } else if (qty >= 10) {
+                  label = 'Low Stock';
+                } else {
+                  label = 'Low Stock';
+                }
+                this.settings.selectors.$variantQuantityMessage.html('Available Inventory: ' + label);
+                this.settings.selectors.$variantQuantity.addClass('is-visible');
               } else {
-                // 1-9
-                label = 'Low Stock';
-              }
-              this.settings.selectors.$variantQuantityMessage.html('Available Inventory: ' + label);
-              this.settings.selectors.$variantQuantity.addClass('is-visible');
-            } else {
-              // Default behavior: show numeric message when below 10
-              if (variant.inventory_quantity < 10 && variant.inventory_quantity > 0 && this.settings.stockSetting == 'true') {
-                this.settings.selectors.$variantQuantityMessage.html(theme.strings.product.only_left.replace('1', variant.inventory_quantity));
+                // House Hasson OFF: always show numeric Available Inventory: N
+                this.settings.selectors.$variantQuantityMessage.html('Available Inventory: ' + qty);
                 this.settings.selectors.$variantQuantity.addClass('is-visible');
               }
             }
