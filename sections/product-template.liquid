@@ -291,7 +291,11 @@ Modify at your own peril, a broken website is the likely result.
   {% if section.settings.product_quantity_message and section.settings.house_hasson_catalog == false %}
     {% include 'svg-definitions' with 'stock-icon' %}
     <span id="variantQuantity-{{ section.id }}__message">
+    {% if qty < 1 %}
+    Contact us to check availability
+    {% else %}
     Available Inventory: {{ qty }}
+    {% endif %}
     </span>
   {% endif %}
   
