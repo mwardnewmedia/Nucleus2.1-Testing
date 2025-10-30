@@ -173,7 +173,7 @@
   <div class="wrapper">
 
     <div class="grid--full" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-      <div class="grid-item large--one-third" style="flex: 0 0 auto; display: flex; align-items: center;">
+      <div class="grid-item large--one-third" style="flex: 0 0 {% if settings.nmr_local %}66.666%{% else %}auto{% endif %}; display: flex; align-items: center;">
         <div class="ecom-left-flex" style="display: flex; align-items: center; gap: 15px;">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
