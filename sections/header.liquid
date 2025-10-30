@@ -241,6 +241,7 @@ Modify at your own peril, a broken website is the likely result.
 
     <div class="grid--full">
       <div class="grid-item large--one-half">
+        <div class="logo-left-flex" style="display: flex; align-items: center; gap: 15px;">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -302,6 +303,22 @@ Modify at your own peril, a broken website is the likely result.
         {% else %}
           </div>
         {% endif %}
+        {% if settings.nmr_local %}
+          <div class="header-store-locator medium-down--hide" style="flex: 0 0 auto;">
+            <script>
+              window.MightyLocationSelectorConfig = {
+                theme: 'light',
+                showHours: true,
+                showCityState: true,
+                showPhone: true,
+                defaultLocationId: null
+              };
+            </script>
+            <div id="mighty-location-selector"></div>
+            <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js" defer></script>
+          </div>
+        {% endif %}
+        </div>
       </div>
 
       <div class="grid-item medium-down--hide {% if settings.nmr_local %}large--one-fourth{% else %}large--one-half{% endif %} text-center large--text-right">
@@ -334,22 +351,6 @@ Modify at your own peril, a broken website is the likely result.
                 {{ 'layout.cart.cart' | t }} <span class="cart-count cart-badge--desktop {% if cart.item_count == 0 %}hidden-count{% endif %}">{{ cart.item_count }}</span>
               </a>
               {% endunless %}
-
-              {% if settings.nmr_local %}
-                <div class="header-store-locator medium-down--hide">
-                  <script>
-                    window.MightyLocationSelectorConfig = {
-                      theme: 'light',
-                      showHours: true,
-                      showCityState: true,
-                      showPhone: true,
-                      defaultLocationId: null
-                    };
-                  </script>
-                  <div id="mighty-location-selector"></div>
-                  <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js" defer></script>
-                </div>
-              {% endif %}
 
               {% unless section.settings.hide_search_bar %}
                 {% include 'search-bar' %}
