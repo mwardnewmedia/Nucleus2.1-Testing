@@ -240,7 +240,7 @@ Modify at your own peril, a broken website is the likely result.
     {% if section.settings.logo_alignment == "logo_left"  %}
 
     <div class="grid--full">
-      <div class="grid-item large--one-half">
+      <div class="grid-item {% if settings.nmr_local %}large--two-thirds{% else %}large--one-half{% endif %}">
         <div class="logo-left-flex" style="display: flex; align-items: center; gap: 15px;">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
@@ -321,7 +321,7 @@ Modify at your own peril, a broken website is the likely result.
         </div>
       </div>
 
-      <div class="grid-item medium-down--hide {% if settings.nmr_local %}large--one-fourth{% else %}large--one-half{% endif %} text-center large--text-right">
+      <div class="grid-item medium-down--hide {% if settings.nmr_local %}large--one-third{% else %}large--one-half{% endif %} text-center large--text-right">
         <div class="header-right-flex-wrapper">
           <div class="header-right-content">
             <div class="site-header--text-links{% if section.settings.announcement_text == blank %} medium-down--hide{% endif %}">
