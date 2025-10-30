@@ -7424,46 +7424,6 @@ form#ecom-round-search-bar input{
 }
 
 /*============================================================================
-  Mobile Store Locator Styling
-==============================================================================*/
-.mobile-store-locator-wrapper {
-  display: none !important;
-  
-  @include at-query ($max, $medium) {
-    display: block !important;
-    width: 100%;
-    padding: 10px 15px;
-    margin-top: 0;
-    text-align: center;
-    background-color: transparent;
-    visibility: visible !important;
-    opacity: 1 !important;
-    
-    #mighty-location-selector-mobile,
-    #mighty-location-selector,
-    .mobile-location-selector {
-      display: inline-block !important;
-      width: 100%;
-      max-width: 100%;
-      visibility: visible !important;
-      opacity: 1 !important;
-    }
-  }
-  
-  @include at-query ($min, $large) {
-    display: none !important;
-    visibility: hidden !important;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .mobile-store-locator-wrapper {
-    display: block !important;
-    visibility: visible !important;
-  }
-}
-
-/*============================================================================
   Mighty Location Selector Phone Styling - Use Header Text Color
 ==============================================================================*/
 .mighty-location-selector-content .mighty-location-selector-phone {
