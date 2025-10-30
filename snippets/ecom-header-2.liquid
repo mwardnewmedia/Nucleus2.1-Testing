@@ -251,7 +251,7 @@
             <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js"></script>
           </div>
         {% endif %}
-		<div class="header-customer-login-wrapper{% if section.settings.hide_customer_login or page.template_suffix contains 'dalp' %} hide-element{% endif %}">
+		<div class="header-customer-login-wrapper{% if section.settings.hide_customer_login or page.template_suffix contains 'dalp' %} hide-element{% endif %}" style="margin-left:30px;">
           {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
               {% if settings.nmr_local %}
                 <div style="display: flex; align-items: center; white-space: nowrap;">
