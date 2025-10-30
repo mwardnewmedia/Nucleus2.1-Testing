@@ -169,11 +169,35 @@
         margin: 0 auto !important;
       }
     }
+    @media (min-width: 769px) {
+      #ecom-site-header .ecom-row {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 15px !important;
+        width: 100% !important;
+      }
+      #ecom-site-header .ecom-center {
+        flex: 1 1 auto !important;
+      }
+      #ecom-site-header .ecom-right {
+        flex: 0 0 auto !important;
+        min-width: fit-content !important;
+      }
+    }
+    @media (max-width: 768px) {
+      #ecom-site-header .ecom-row {
+        display: block !important;
+        text-align: center !important;
+      }
+      #ecom-site-header .ecom-center { margin-top: 10px !important; }
+      #ecom-site-header .ecom-right { margin-top: 10px !important; }
+    }
   </style>
   <div class="wrapper">
 
-    <div class="grid--full" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-      <div class="grid-item large--one-third" style="flex: 0 0 {% if settings.nmr_local %}66.666%{% else %}auto{% endif %}; display: flex; align-items: center;">
+    <div class="grid--full ecom-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div class="grid-item large--one-third ecom-left" style="flex: 0 0 {% if settings.nmr_local %}66.666%{% else %}auto{% endif %}; display: flex; align-items: center;">
         <div class="ecom-left-flex" style="display: flex; align-items: center; gap: 15px;">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
@@ -254,13 +278,13 @@
         </div>
       </div>
 
-      <div class="grid-item large--one-third text-center large--text-right{% if section.settings.hide_search_bar or page.template_suffix contains 'dalp' %} hide-element{% endif %}" style="flex: 1 1 auto; display: flex; justify-content: center; align-items: center; min-width: 200px; max-width: 500px;">
+      <div class="grid-item large--one-third text-center large--text-right ecom-center{% if section.settings.hide_search_bar or page.template_suffix contains 'dalp' %} hide-element{% endif %}" style="flex: 1 1 auto; display: flex; justify-content: center; align-items: center; min-width: 200px; max-width: 500px;">
         {% unless section.settings.hide_search_bar or page.template_suffix contains 'dalp' %}
           {% include 'ecom-search-bar' %}
         {% endunless %}
       </div>
       
-      <div class="grid-item medium-down--hide large--one-third text-right" style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center; min-width: fit-content;">
+      <div class="grid-item medium-down--hide large--one-third text-right ecom-right" style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center; min-width: fit-content;">
         <div class="header-right-elements" style="display: flex; align-items: center; justify-content: flex-end; gap: 15px; flex-wrap: nowrap;">
        
         
