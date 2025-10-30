@@ -157,11 +157,20 @@
 {% endunless %}
 
 <header class="site-header" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" id="ecom3-site-header">
+  <style>
+    @media (min-width: 769px) {
+      #ecom3-site-header .ecom3-row { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 15px !important; }
+      #ecom3-site-header .ecom3-left { display: flex !important; align-items: center !important; gap: 15px !important; }
+    }
+    @media (max-width: 768px) {
+      #ecom3-site-header .ecom3-left { display: flex !important; flex-direction: column !important; align-items: center !important; }
+    }
+  </style>
   <div class="ecom-header-3-wrapper">
 
-    <div class="flex" style="justify-content: space-between; align-items: center;">
+    <div class="flex ecom3-row" style="justify-content: space-between; align-items: center;">
       
-      <div class="flex-logo flex-item">
+      <div class="flex-logo flex-item ecom3-left">
         {% if request.page_type == 'index' %}
           <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
         {% else %}
@@ -226,6 +235,12 @@
           {% else %}
             </div>
           {% endif %}
+          {% if settings.nmr_local %}
+            <div class="header-store-locator-wrapper medium-down--hide">
+              <div id="mighty-location-selector" style="display: inline-block; vertical-align: middle;"></div>
+              <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2" defer></script>
+            </div>
+          {% endif %}
       </div>
 
       <div class="flex-auto flex-item{% if section.settings.hide_search_bar or page.template_suffix contains 'dalp' %} hide-element{% endif %}" style="text-align: center;">
@@ -235,12 +250,6 @@
       </div>
             
       <div class="flex-item" id="ecom3-account-cart" style="display: flex; align-items: center; gap: 15px; flex-wrap: nowrap;">      
-        {%if settings.nmr_local %}
-          <div class="header-store-locator-wrapper">
-            <div id="mighty-location-selector" style="display: inline-block; vertical-align: middle;"></div>
-            <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2"></script>
-          </div>
-        {% endif %}
 
 		<div class="header-customer-login-wrapper{% if section.settings.hide_customer_login or page.template_suffix contains 'dalp' %} hide-element{% endif %}">
           {% unless section.settings.hide_customer_login or page.template_suffix contains 'dalp' %}
