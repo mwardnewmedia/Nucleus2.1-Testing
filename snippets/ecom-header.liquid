@@ -479,7 +479,22 @@
       <span class="fallback-text">Search</span>
     </button>
   </form>
-  </div> 
+  </div>
+  {% if settings.nmr_local %}
+    <div class="header-store-locator" style="flex: 0 0 auto;">
+      <script>
+        window.MightyLocationSelectorConfig = {
+          theme: 'light',
+          showHours: true,
+          showCityState: true,
+          showPhone: true,
+          defaultLocationId: null
+        };
+      </script>
+      <div id="mighty-location-selector"></div>
+      <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js" defer></script>
+    </div>
+  {% endif %}
   {% endunless %}          
 </div>
 
