@@ -29,7 +29,7 @@ If Catalyst inventory is true, display Availability filter group
 {% endfor %}    
 
 {%- assign is_catalyst_collection = false -%}
-{%- assign catalyst_collections = 'automotive,building-materials,clothing-apparel,electrical,farm,food-snacks,heating-cooling,hardware,home-cleaning,kitchen-bath,lawn-garden,lighting-ceiling-fans,live-plants,lumber,outdoor-living,paint,pet,plumbing,seasonal-holiday,small-appliances-electronics,sporting-goods,storage-organization,tools' | split: ',' -%}
+{%- assign catalyst_collections = 'pet, farm, lawn-garden, live-plants, automotive, building-materials, clothing-apparel, electrical, food-snacks, heating-cooling, hardware, home-cleaning, kitchen-bath, lighting-ceiling-fans, lumber, outdoor-living-patio, paint-supplies, plumbing, seasonal-holiday, small-appliances-electronics, sporting-goods, storage-organization, tools' | split: ',' -%}
 {%- if collection.handle -%}
   {%- for catalyst_handle in catalyst_collections -%}
     {%- if collection.handle == catalyst_handle -%}
@@ -292,6 +292,13 @@ If Catalyst inventory is true, display Availability filter group
       {%- endfor -%}
     {%- else -%}
       {%- for filter in collection.filters -%}
+        {% assign is_department_label = false %}
+        {% if filter.label == 'Departments' or filter.label == 'Department' or filter.label == 'Rental Department' %}
+          {% assign is_department_label = true %}
+        {% endif %}
+        {% if all_collections == false and is_department_label %}
+          {% comment %} don't render departments filter outside /collections/all {% endcomment %}
+        {% else %}
         <details class="filter-group" open>
           <summary class="filter-group-summary">
             <div>
@@ -369,6 +376,7 @@ If Catalyst inventory is true, display Availability filter group
             {%- endcase -%}
           </div>
         </details>
+        {% endif %}
       {%- endfor -%}
     {%- endif -%}
   </form>
