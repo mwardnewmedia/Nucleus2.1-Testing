@@ -559,6 +559,22 @@ Modify at your own peril, a broken website is the likely result.
   </div> 
 {% endunless %} 
 
+{% if settings.nmr_local %}
+  <div class="header-store-locator">
+    <script>
+      window.MightyLocationSelectorConfig = {
+        theme: 'light',
+        showHours: true,
+        showCityState: true,
+        showPhone: true,
+        defaultLocationId: null
+      };
+    </script>
+    <div id="mighty-location-selector"></div>
+    <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js" defer></script>
+  </div>
+{% endif %}
+
 
 
 <nav class="nav-bar" id="navBar" role="navigation">
