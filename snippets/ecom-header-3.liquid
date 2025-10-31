@@ -412,6 +412,21 @@
     </button>
   </form>
   </div> 
+  {% if settings.nmr_local %}
+    <div class="header-store-locator" style="flex: 0 0 auto;">
+      <script>
+        window.MightyLocationSelectorConfig = {
+          theme: 'light',
+          showHours: true,
+          showCityState: true,
+          showPhone: true,
+          defaultLocationId: null
+        };
+      </script>
+      <div id="mighty-location-selector"></div>
+      <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js?v=3.2" defer></script>
+    </div>
+  {% endif %}
   {% endunless %}
 </div>
 
