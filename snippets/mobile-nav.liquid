@@ -1,3 +1,20 @@
+
+{% if settings.nmr_local %}
+  <div class="header-store-locator">
+    <script>
+      window.MightyLocationSelectorConfig = {
+        theme: 'light',
+        showHours: true,
+        showCityState: true,
+        showPhone: true,
+        defaultLocationId: null
+      };
+    </script>
+    <div id="mighty-location-selector"></div>
+    <script src="https://local.newmediaretailer.com/vendor/mighty/mighty-location-selector-widget.js" defer></script>
+  </div>
+{% endif %}
+
 <div id="mobileNavHeader">
     <div class="display-table-cell">
     <button class="menu-toggle mobileNavBar-link" aria-controls="navBar" aria-expanded="true">
